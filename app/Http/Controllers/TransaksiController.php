@@ -27,9 +27,9 @@ class TransaksiController extends Controller
     public function create()
     {
 
-        $transaksi=Transaksi::all();
+        $komoditases=Komoditas::all();
         
-        return view('transaksi.create',compact('transaksi'));  
+        return view('transaksi.create',compact('komoditases'));  
     }
 
     /**

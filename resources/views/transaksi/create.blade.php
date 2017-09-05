@@ -23,7 +23,7 @@
 		<div class="form-group">
 			<label for="komoditas_id">Select list:</label>
 				<select class="form-control" id="komoditas_id">
-				@foreach ($transaksi->komoditas as $komoditas)
+				@foreach ($komoditases as $komoditas)
 					<option>{{$komoditas->nama}}</option>
 				@endforeach
 
