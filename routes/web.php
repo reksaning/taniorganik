@@ -44,6 +44,19 @@ Route::get('/produksi/edit/{produksi}','ProduksiController@edit');
 Route::put('/produksi/{produksi}','ProduksiController@update');
 Route::delete('/produksi/{produksi}','ProduksiController@destroy');
 
+// bahan baku
+Route::get('/bahan', 'BahanController@index')->name('bahan');
+Route::get('/bahan/create', 'BahanController@create');
+Route::post('/bahan','BahanController@store');
+Route::get('/bahan/edit/{bahan}','BahanController@edit');
+Route::put('/bahan/{bahan}','BahanController@update');
+Route::delete('/bahan/{bahan}','BahanController@destroy');
 
-
+// stock bahan baku
+Route::get('/stockbahan', 'StockBahanController@index')->name('bahan');
+Route::get('/stockbahan/create', 'StockBahanController@create');
+Route::post('/stockbahan','StockBahanController@store');
+Route::get('/stockbahan/edit/{stockbahan}','StockBahanController@edit');
+Route::put('/stockbahan/{stockbahan}','StockBahanController@update');
+Route::delete('/stockbahan/{stockbahan}','StockBahanController@destroy');
 //

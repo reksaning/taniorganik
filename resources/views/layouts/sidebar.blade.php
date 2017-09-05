@@ -6,8 +6,10 @@
 
 			<li><a href="/dashboard">Home</a></li>
 			<li><a href="/komoditas">Komoditas</a></li>
-			<li><a href="/transaksi">Coba</a></li>
+			<li><a href="/transaksi">Transaksi</a></li>
 			<li><a href="/produksi">Produksi</a></li>
+			<li><a href="/bahan">Bahan Kemas</a></li>
+			<li><a href="/stockbahan">Update Bahan Kemas</a></li>
 
 			</ul>
 		</div>
