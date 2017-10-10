@@ -59,4 +59,31 @@ Route::post('/stockbahan','StockBahanController@store');
 Route::get('/stockbahan/edit/{stockbahan}','StockBahanController@edit');
 Route::put('/stockbahan/{stockbahan}','StockBahanController@update');
 Route::delete('/stockbahan/{stockbahan}','StockBahanController@destroy');
-//
+
+//data petani
+Route::get('/petani', 'PetaniController@index')->name('petani');
+Route::get('/petani/create', 'PetaniController@create');
+Route::post('/petani','PetaniController@store');
+Route::get('/petani/edit/{petani}','PetaniController@edit');
+Route::put('/petani/{petani}','PetaniController@update');
+Route::delete('/petani/{petani}','PetaniController@destroy');
+
+//data lahan
+Route::get('/lahan', 'LahanController@index')->name('lahan');
+Route::get('/lahan/create', 'LahanController@create');
+Route::post('/lahan','LahanController@store');
+Route::get('/lahan/edit/{lahan}','LahanController@edit');
+Route::put('/lahan/{lahan}','LahanController@update');
+Route::delete('/lahan/{lahan}','LahanController@destroy');
+
+
+//data lahan
+Route::get('/peramalan', 'PeramalanController@index')->name('peramalan');
+
+
+Route::get('/test', function()
+{
+	$transaksis = \App\Transaksi::dekomposisi();
+
+	return $transaksis;
+});

@@ -21,10 +21,10 @@
 		
     <div class="bahan">
 		<div class="form-group">
-			<label for="bahans_id">Select list:</label>
-				<select class="form-control" id="komoditas_id">
-				@foreach ($stockbahan->bahan as $stockbahan)
-					<option>{{$stockbahan->nama}}</option>
+			<label for="bahan_id">Bahan Kemas</label>
+				<select class="form-control" id="bahan_id" name="bahan_id">
+				@foreach ($bahans as $bahan)
+					<option value="{{$bahan->id}}">{{$bahan->nama}}</option>
 				@endforeach
 
 				</select>
@@ -34,7 +34,7 @@
 
 		<div class="form-group">
 			<label for="title">Jumlah</label>
-			<input type="integer" class="form-control" id="waktu" name="waktu">
+			<input type="integer" class="form-control" id="jumlah" name="jumlah">
 		</div>
 
 

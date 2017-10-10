@@ -7,7 +7,7 @@
 <h1>Input Data Transaksi</h1>
 	<hr>
 
-	<form method="POST" action="/transaksi">
+	<form method="POST" action="/produksi">
 		{{csrf_field()}}
 
 	<div class="col-sm-6">
@@ -22,13 +22,11 @@
 
     <div class="komoditas">
 		<div class="form-group">
-			<label for="komoditas_id">Select list:</label>
-				<select class="form-control" id="komoditas_id">
-
-				{{-- @foreach ($transaksi->komoditas as $komoditas)
-					<option>{{$komoditas->nama}}</option>
-				@endforeach --}}
-
+			<label for="komoditas_id">Nama Sayuran</label>
+				<select class="form-control" id="komoditas_id" name="komoditas_id">
+				@foreach ($komoditases as $komoditas)
+					<option value="{{$komoditas->id}}">{{$komoditas->nama}}</option>
+				@endforeach
 				</select>
 		</div> 
 	</div>
@@ -36,7 +34,7 @@
 
 		<div class="form-group">
 			<label for="title">Jumlah</label>
-			<input type="integer" class="form-control" id="waktu" name="waktu">
+			<input type="integer" class="form-control" id="jumlah" name="jumlah">
 		</div>
 
 

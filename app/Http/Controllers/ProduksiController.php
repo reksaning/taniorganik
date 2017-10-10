@@ -27,9 +27,10 @@ class ProduksiController extends Controller
     public function create()
     {
 
-        $produksi=Produksi::all();
 
-        return view('produksi.create',compact('produksi'));    
+        $komoditases=Komoditas::all();
+        
+        return view('produksi.create',compact('komoditases'));
     }
 
     /**
@@ -46,7 +47,7 @@ class ProduksiController extends Controller
                 'jumlah'   =>  'required'
                 ]);
 
-            Produsksi::create(request(['komoditas_id','tanggal','jumlah']));
+            Produksi::create(request(['komoditas_id','tanggal','jumlah']));
             return redirect('/produksi');    
     }
 
@@ -71,7 +72,9 @@ class ProduksiController extends Controller
     public function edit(Produksi $produksi)
 
     {
-        return view('ProduksiController.edit',compact('produksi'));
+         $komoditases=Komoditas::all();
+
+        return view('produksi.edit',compact('produksi','komoditases'));
     }
 
     /**

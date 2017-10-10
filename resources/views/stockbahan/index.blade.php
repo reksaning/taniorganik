@@ -22,7 +22,7 @@
           <tr>
             <th> {{$nomor}}</th>
               <td> {{$stockbahan->tanggal}}</td>
-              <td> {{$stockbahan->bahans_id}} </td>
+              <td> {{$stockbahan->bahan->nama}} </td>
               <td> {{$stockbahan->jumlah}} </td>
               <td><a href="stockbahan/edit/{{ $stockbahan->id }}" class="btn btn-info btn-sm" role="button ">edit</a>
               <form action="/stockbahan/{{$stockbahan->id}}" method="POST">

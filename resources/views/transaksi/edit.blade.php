@@ -18,12 +18,15 @@
 		    </div>
 		</div>
 		
-
 		<div class="form-group">
-			<label for="title">Nama Sayuran</label>
-			<input value="{{ $transaksi->komoditas_id }}" type="integer" class="form-control" id="komoditas_id" name="komoditas_id">
+			<label for="komoditas_id">Nama Sayuran</label>
+				<select class="form-control" id="komoditas_id" name="komoditas_id">
+				@foreach ($komoditases as $komoditas)
+					<option value="{{$komoditas->id}}">{{$komoditas->nama}}</option>
+				@endforeach
+				</select>
 		</div>
-
+		
 		<div class="form-group">
 			<label for="body">Jumlah (kg) </label>
 			<input type="integer" value="{{ $transaksi->jumlah }}" class="form-control" id="jumlah" name="jumlah">

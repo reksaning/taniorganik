@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
   
   {{-- datepicker --}}
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -52,52 +53,50 @@
 </head>
 <body>
 
-@include('layouts.nav')
-  
-<div class="container-fluid text-center">    
-  <div class="row content">
+<div class="col-md-12 col">
+    @include('layouts.nav')
+</div>
 
+<div class="col-md-12 col">
+    <div class="row">
+        <div class="col-md-3 col">
+            <div class="container-fluid text-left">    
+                <div class="row content">
+                @include('layouts.sidebar')
+                </div>
+            </div>
+        </div>
 
-@include('layouts.sidebar')
+        <div class="col-md-7 text-left"> 
+            @yield('content')
+        </div>
 
+        <div class="col-md-2 text-left"> 
+            @include('layouts.side')
+        </div>
+    </div>
+</div>
 
-    <div class="col-sm-8 text-left"> 
-      {{-- <h1>Welcome</h1> --}}
-      
-      @yield('content')
-
-      
-      <div class="row">
-        <div class="col-sm-12">
-      
-
-      <script src="public/js/bootstrap-datepicker.js"></script>
+<script src="public/js/bootstrap-datepicker.js"></script>
 <script>
 $(".input-group.date").datepicker({autoclose: true, todayHighlight: true});
 </script>
-      <p>Isi
-
-        
 
 
-      </p>
-      <hr>
-      <h3>Test</h3>
-      <p>Lorem ipsum...</p>
-      </div>
-    </div>
-    </div>
-@include('layouts.side')
-
-  </div>
+<div class="col-md-12">
+        @include('layouts.footer')
 </div>
 
 
+</html>
 
 
 
 
 
-@include('layouts.footer')
+
+
+
+
 
 

@@ -2,9 +2,16 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+
 
 class StockBahan extends Model
 {
-    //
+	public function bahan()
+
+	{
+
+	return $this->BelongsTo('\App\Bahan');
+	
+	}
+    
 }

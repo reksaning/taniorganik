@@ -1,23 +1,22 @@
 @extends('layouts.master')
 
 @section('content')
-	<h1>Edit Data Komoditas</h1>
+	<h1>Edit Data Penanaman</h1>
 	<hr>
 
-	<form method="POST" action="/produksi/{{$produksi->id}}">
+	<form method="POST" action="/lahan/{{$lahan->id}}">
 		{{csrf_field()}}
 		{{ method_field('PUT') }}
 
 	<div class="col-sm-6">
-
 		<div class="form-group">
-			<label for="title">Tanggal</label>
-		    <div class="input-group date " data-date="" data-date-format="yyyy-mm-dd">
-		          <input  value="{{$produksi->tanggal}}" class="form-control" id="tanggal" type="date" name="tanggal" readonly="readonly">
-		          <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-		    </div>
+			<label for="petnai_id">Nama Petani</label>
+				<select class="form-control" id="petani_id" name="petani_id">
+				@foreach ($petanis as $petani)
+					<option value="{{$petani->id}}">{{$petani->nama}}</option>
+				@endforeach
+				</select>
 		</div>
-		
 
 		<div class="form-group">
 			<label for="komoditas_id">Nama Sayuran</label>
@@ -27,10 +26,10 @@
 				@endforeach
 				</select>
 		</div>
-
+		
 		<div class="form-group">
-			<label for="body">Jumlah (kg) </label>
-			<input type="integer" value="{{ $produksi->jumlah }}" class="form-control" id="jumlah" name="jumlah">
+			<label for="body">Luas Lahan </label>
+			<input type="integer" value="{{ $lahan->luas }}" class="form-control" id="luas" name="luas">
 		</div>
 			<hr>
 		<div class="row">	

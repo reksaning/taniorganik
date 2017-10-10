@@ -27,9 +27,9 @@ class StockBahanController extends Controller
     public function create()
     {
 
-        $stockbahan=stockbahan::all();
+        $bahans=Bahan::all();
         
-        return view('stockbahan.create',compact('stockbahan'));  
+        return view('stockbahan.create',compact('bahans'));  
     }
 
     /**
@@ -41,12 +41,12 @@ class StockBahanController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(), [
-                'bahans_id'       =>  'required',
+                'bahan_id'       =>  'required',
                 'tanggal'        =>  'required',
                 'jumlah'   =>  'required'
                 ]);
 
-            stockbahan::create(request(['bahans_id','tanggal','jumlah']));
+            stockbahan::create(request(['bahan_id','tanggal','jumlah']));
             return redirect('/stockbahan');    }
 
     /**
@@ -87,14 +87,14 @@ class StockBahanController extends Controller
 
         $this->validate($request, [
 
-            'bahans_id'       =>  'required',
+            'bahan_id'       =>  'required',
             'tanggal'        =>  'required',
             'jumlah'   =>  'required'
 
         ]);
 
         $stockbahan->update([
-            'bahans_id' => $request->komoditas_id,
+            'bahan_id' => $request->bahan_id,
             'tanggal' => $request->tanggal,
             'jumlah' => $request->jumlah,
         ]);

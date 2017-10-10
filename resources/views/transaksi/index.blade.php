@@ -10,7 +10,7 @@
           <tr>
             <th> No </th>
               <th> tanggal </th>
-              <th> komoditas_id </th>
+              <th> komoditas </th>
               <th> jumlah terjual </th>
               <th></th>
       </tr>
@@ -22,7 +22,7 @@
           <tr>
             <th> {{$nomor}}</th>
               <td> {{$transaksi->tanggal}}</td>
-              <td> {{$transaksi->komoditas_id}} </td>
+              <td> {{$transaksi->komoditas->nama}} </td>
               <td> {{$transaksi->jumlah}} </td>
               <td><a href="transaksi/edit/{{ $transaksi->id }}" class="btn btn-info btn-sm" role="button ">edit</a>
               <form action="/transaksi/{{$transaksi->id}}" method="POST">

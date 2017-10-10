@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Petani;
+use App\Lahan;
 use App\Komoditas;
-use App\Transaksi;
 use Illuminate\Http\Request;
 
-class TransaksiController extends Controller
+class LahanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +15,10 @@ class TransaksiController extends Controller
      */
     public function index()
     {
+        $petanis=Petani::all();
+        $lahan=Lahan::all();
         $komoditases=Komoditas::all();
-        $transaksi=Transaksi::all();
-        return view('transaksi.index',compact('komoditases', 'transaksi'));
+        return view('lahan.index',compact('petanis', 'lahan','komoditases'));
     }
 
     /**
@@ -26,9 +28,9 @@ class TransaksiController extends Controller
      */
     public function create()
     {
+        $petanis=Petani::all();
         $komoditases=Komoditas::all();
-        
-        return view('transaksi.create',compact('komoditases'));  
+        return view('lahan.create',compact('petanis','komoditases'));  
     }
 
     /**
@@ -40,13 +42,13 @@ class TransaksiController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(), [
-                'komoditas_id'       =>  'required',
-                'tanggal'        =>  'required',
-                'jumlah'   =>  'required'
+                'petani_id'       =>  'required',
+                'komoditas_id'        =>  'required',
+                'luas'   =>  'required'
                 ]);
 
-            Transaksi::create(request(['komoditas_id','tanggal','jumlah']));
-            return redirect('/transaksi');    }
+            Lahan::create(request(['petani_id','komoditas_id','luas']));
+            return redirect('/lahan');    }
 
     /**
      * Display the specified resource.
@@ -66,11 +68,11 @@ class TransaksiController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function edit(Transaksi $transaksi)
+    public function edit(lahan $lahan)
 
     {
-        $komoditases=Komoditas::all();
-        return view('transaksi.edit',compact('transaksi','komoditases'));
+        $petanies=Petani::all();
+        return view('lahan.edit',compact('lahan','petanies'));
     }
 
     /**
@@ -81,38 +83,30 @@ class TransaksiController extends Controller
      * @return \Illuminate\Http\Response
      */
 
- public function update(Transaksi $transaksi, Request $request)
+ public function update(lahan $lahan, Request $request)
 
     {
 
         $this->validate($request, [
 
-            'komoditas_id'       =>  'required',
-            'tanggal'        =>  'required',
-            'jumlah'   =>  'required'
+            'petani_id'       =>  'required',
+            'komoditas_id'        =>  'required',
+            'luas'   =>  'required'
 
         ]);
 
-        $transaksi->update([
+        $lahan->update([
+            'petani_id' => $request->petani_id,
             'komoditas_id' => $request->komoditas_id,
-            'tanggal' => $request->tanggal,
-            'jumlah' => $request->jumlah,
+            'luas' => $request->luas,
         ]);
 
-        return redirect('/transaksi');
+        return redirect('/lahan');
     }
-    public function destroy(Transaksi $transaksi)
+    public function destroy(lahan $lahan)
     {
-        $transaksi->delete();
-        return redirect('/transaksi');
-    }
-
-    public function ramal()
-    {
-        $komoditases=Komoditas::all();
-        $transaksi=Transaksi::all();
-        
-        return view('transaksi.index',compact('komoditases', 'transaksi'));
+        $lahan->delete();
+        return redirect('/lahan');
     }
 
 }

@@ -15,7 +15,25 @@ class Komoditas extends Model
 	return $this->HasMany('\App\Transaksi');
 	
 	}
+
+
+	public function produksi()
+
+   	{
+
+	return $this->HasMany('\App\Produksi');
+	
+	}
    
+
+   	public function lahan()
+
+   	{
+
+	return $this->HasMany('\App\Lahan');
+	
+	}
+	
 
 }
  
