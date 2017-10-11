@@ -19,6 +19,11 @@ class Transaksi extends Model
 		return $this->tanggal->format('Y-m');
 	}
 
+	public static function getMonth($month = 36)
+	{
+		return static::orderBy('tanggal', 'desc')->get()->take($month)->sortBy('bulan')->pluck('bulan')->unique()->values();
+	}
+
 	public static function dekomposisi()
 
 	{
@@ -38,7 +43,7 @@ class Transaksi extends Model
 
 		$n = 1;
 		$val['xy'] = 0;
-		foreach (Transaksi::orderBy('tanggal')->get()->pluck('bulan')->unique() as $bulan) {
+		foreach (Transaksi::getMonth() as $bulan) {
 			
 			$val['sumy'][$bulan] = Transaksi::where('tanggal', 'like', "%$bulan%")->sum('jumlah');
 			$val['xy'] += $n*$val['sumy'][$bulan];
@@ -51,15 +56,37 @@ class Transaksi extends Model
 		
 		//rumus hasil peramalan Trend Linear
 
-		$m=$x+1;
-		$val['x3'] = 0;
-		for ($i=$m; $i < $m+3; $i++) { 
-			$val['x3'] = $val['a']+$val['b']*$i;
+		
+		// $val['x3'] = 0;
+		for ($i=1; $i <= $x; $i++) { 
+			$Y[$i] = $val['a']+$val['b']*$i;
 			
 		}
 
+		$val['Y'] = $Y;
 
-		return $val;
+		$a=1;
+		foreach ($val['sumy'] as $sumy) {
+			$koef[$a]=$sumy/$Y[$a];
+			$a++;
+		}
+		$val['koef']=$koef;
+
+		if (request()->has('periode')) {
+			$periode=request('periode');
+			for ($i=$x+1; $i <= $x+$periode; $i++) { 
+				$H[$i] = $val['a']+$val['b']*$i;
+				
+			}
+			$val['H'] = $H;
+		}
+
+
+
+
+		return [
+			'val' => $val, 
+			];
 
 
 

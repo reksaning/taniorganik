@@ -79,11 +79,20 @@ Route::delete('/lahan/{lahan}','LahanController@destroy');
 
 //data lahan
 Route::get('/peramalan', 'PeramalanController@index')->name('peramalan');
+Route::post('/peramalan','PeramalanController@index');
 
 
 Route::get('/test', function()
 {
 	$transaksis = \App\Transaksi::dekomposisi();
+
+	return $transaksis;
+});
+
+Route::get('/test2', function()
+{
+	$transaksis[0] = \App\Transaksi::all()->sortBy('komoditas_id');
+	$transaksis[1] = \App\Transaksi::all()->sortBy('komoditas_id')->values()->all();
 
 	return $transaksis;
 });

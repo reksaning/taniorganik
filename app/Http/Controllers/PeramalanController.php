@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Komoditas;
+use App\Transaksi;
 use Illuminate\Http\Request;
 
 class PeramalanController extends Controller
@@ -13,7 +14,9 @@ class PeramalanController extends Controller
      */
     public function index()
     {
-       return view('ramal.index');
+        $transaksi=Transaksi::all();
+        $komoditases=Komoditas::all();
+        return view('ramal.index',compact('transaksi','komoditases'));
     }
 
     /**
