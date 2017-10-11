@@ -21,14 +21,14 @@ class Transaksi extends Model
 
 	public static function getMonth($month = 36)
 	{
-		return static::orderBy('tanggal', 'desc')->get()->take($month)->sortBy('bulan')->pluck('bulan')->unique()->values();
+		return static::where('komoditas_id', request('komoditas_id'))->orderBy('tanggal', 'desc')->get()->take($month)->sortBy('bulan')->pluck('bulan')->unique()->values();
 	}
 
 	public static function dekomposisi()
 
 	{
 
-		$x = Transaksi::all()->pluck('bulan')->unique()->count();
+		$x = Transaksi::where('komoditas_id', request('komoditas_id'))->get()->pluck('bulan')->unique()->count();
 		$val['x'] = 0;
 		$val['x2'] = 0;
 
@@ -38,7 +38,7 @@ class Transaksi extends Model
 			$val['x2'] += pow($i, 2);
 		}
 
-		$val['y'] = Transaksi::all()->sum('jumlah');
+		$val['y'] = Transaksi::where('komoditas_id', request('komoditas_id'))->get()->sum('jumlah');
 
 
 		$n = 1;
@@ -74,19 +74,15 @@ class Transaksi extends Model
 
 		if (request()->has('periode')) {
 			$periode=request('periode');
+			$a = 1;
 			for ($i=$x+1; $i <= $x+$periode; $i++) { 
-				$H[$i] = $val['a']+$val['b']*$i;
-				
+				$H[$i] = number_format(($val['a']+$val['b']*$i)*$koef[$a], 0);
+				$a++;
 			}
 			$val['H'] = $H;
 		}
 
-
-
-
-		return [
-			'val' => $val, 
-			];
+		return array_values($val['H']);
 
 
 

@@ -16,7 +16,14 @@ class PeramalanController extends Controller
     {
         $transaksi=Transaksi::all();
         $komoditases=Komoditas::all();
-        return view('ramal.index',compact('transaksi','komoditases'));
+
+        if (request()->has('komoditas_id')) {
+            $forecasts = Transaksi::dekomposisi();
+        } else {
+            $forecasts = null ;
+        }
+        // return $forecasts;
+        return view('ramal.index',compact('transaksi','komoditases', 'forecasts'));
     }
 
     /**
