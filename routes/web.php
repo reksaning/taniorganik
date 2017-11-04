@@ -103,6 +103,12 @@ Route::get('/MA', function()
 	return \App\Transaksi::movingAverage();
 });
 
+Route::get('/SES', function()
+{
+	// $transaksis = \App\Transaksi::dekomposisi();
+	return \App\Transaksi::SES();
+});
+
 
 
 Route::get('/test2', function()

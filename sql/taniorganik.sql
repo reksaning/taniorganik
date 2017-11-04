@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 11 Okt 2017 pada 13.31
+-- Generation Time: 04 Nov 2017 pada 15.17
 -- Versi Server: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -41,7 +41,9 @@ CREATE TABLE `bahans` (
 --
 
 INSERT INTO `bahans` (`id`, `nama`, `harga`, `created_at`, `updated_at`) VALUES
-(1, 'Sterofoam', 5000, '2017-09-05 08:32:59', '2017-09-05 08:32:59');
+(1, 'Sterofoam', 5000, '2017-09-05 08:32:59', '2017-09-05 08:32:59'),
+(2, 'karton', 1000, '2017-10-19 23:49:51', '2017-10-19 23:49:51'),
+(3, 'barcode', 500, '2017-10-19 23:50:04', '2017-10-19 23:50:04');
 
 -- --------------------------------------------------------
 
@@ -64,7 +66,8 @@ CREATE TABLE `komoditas` (
 
 INSERT INTO `komoditas` (`id`, `nama`, `waktu`, `kapasitas`, `created_at`, `updated_at`) VALUES
 (1, 'Bayam', 21, 15, '2017-09-05 08:36:03', '2017-09-05 08:36:03'),
-(2, 'Brokoli', 32, 12, '2017-09-05 08:45:04', '2017-09-05 08:45:04');
+(2, 'Brokoli', 32, 12, '2017-09-05 08:45:04', '2017-09-05 08:45:04'),
+(3, 'kecambah', 21, 12, '2017-10-30 03:49:11', '2017-10-30 03:49:11');
 
 -- --------------------------------------------------------
 
@@ -117,7 +120,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (13, '2017_09_04_040802_create_bahans_table', 1),
 (14, '2017_09_04_043003_create_stock_bahans_table', 1),
 (15, '2017_09_05_154648_create_petanis_table', 2),
-(16, '2017_09_10_162058_create_lahans_table', 3);
+(16, '2017_09_10_162058_create_lahans_table', 3),
+(17, '2017_11_04_041017_create_suppliers_table', 4);
 
 -- --------------------------------------------------------
 
@@ -164,6 +168,7 @@ INSERT INTO `petanis` (`id`, `nama`, `alamat`, `luas`, `created_at`, `updated_at
 CREATE TABLE `produksis` (
   `id` int(10) UNSIGNED NOT NULL,
   `komoditas_id` int(11) NOT NULL,
+  `supplier_id` int(11) DEFAULT NULL,
   `tanggal` date NOT NULL,
   `jumlah` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -174,8 +179,10 @@ CREATE TABLE `produksis` (
 -- Dumping data untuk tabel `produksis`
 --
 
-INSERT INTO `produksis` (`id`, `komoditas_id`, `tanggal`, `jumlah`, `created_at`, `updated_at`) VALUES
-(1, 2, '2017-09-06', 12321, '2017-09-05 08:36:20', '2017-09-05 08:45:17');
+INSERT INTO `produksis` (`id`, `komoditas_id`, `supplier_id`, `tanggal`, `jumlah`, `created_at`, `updated_at`) VALUES
+(2, 1, 1, '2017-01-01', 20, '2017-10-30 08:01:20', '2017-10-30 08:01:20'),
+(3, 1, 1, '2017-02-01', 24, '2017-10-30 08:01:34', '2017-10-30 08:01:34'),
+(4, 1, 1, '2017-03-01', 75, '2017-10-30 08:03:00', '2017-10-30 08:03:00');
 
 -- --------------------------------------------------------
 
@@ -197,7 +204,33 @@ CREATE TABLE `stock_bahans` (
 --
 
 INSERT INTO `stock_bahans` (`id`, `tanggal`, `bahan_id`, `jumlah`, `created_at`, `updated_at`) VALUES
-(1, '2017-09-06', 1, 100, '2017-09-05 08:32:16', '2017-09-05 08:32:16');
+(1, '2017-09-06', 1, 100, '2017-09-05 08:32:16', '2017-09-05 08:32:16'),
+(2, '2017-10-29', 52, 100, '2017-10-28 17:00:00', '2017-10-29 15:23:59'),
+(3, '2017-10-29', 21, 111, '2017-10-28 17:00:00', '2017-10-29 15:24:25'),
+(9, '2017-10-29', 9, 100, '2017-10-28 17:00:00', '2017-10-29 16:45:27');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `suppliers`
+--
+
+CREATE TABLE `suppliers` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `alamat` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `suppliers`
+--
+
+INSERT INTO `suppliers` (`id`, `name`, `alamat`, `created_at`, `updated_at`) VALUES
+(2, 'Indomaret', 'Jalan Kaliurang km 20', '2017-11-03 21:47:39', '2017-11-03 21:47:39'),
+(5, 'Alma Midi', 'Jalan Monjali', '2017-11-03 21:52:24', '2017-11-03 21:52:24'),
+(6, 'Giant', 'Jalan Godean', '2017-11-03 21:52:37', '2017-11-03 21:52:37');
 
 -- --------------------------------------------------------
 
@@ -230,7 +263,32 @@ INSERT INTO `transaksis` (`id`, `komoditas_id`, `tanggal`, `jumlah`, `created_at
 (33, 1, '2017-09-06', 23, '2017-10-07 18:25:15', '2017-10-07 18:25:15'),
 (34, 1, '2017-10-04', 39, '2017-10-07 18:25:28', '2017-10-07 18:25:28'),
 (35, 1, '2017-11-08', 77, '2017-10-07 18:25:48', '2017-10-07 18:25:48'),
-(36, 1, '2017-12-01', 48, '2017-10-07 18:26:06', '2017-10-07 18:26:06');
+(36, 1, '2017-12-01', 48, '2017-10-07 18:26:06', '2017-10-07 18:26:06'),
+(37, 1, '2018-01-01', 29, '2017-11-03 07:52:13', '2017-11-03 07:52:13'),
+(38, 1, '2018-02-01', 27, '2017-11-03 07:52:37', '2017-11-03 07:52:37'),
+(39, 1, '2018-03-01', 77, '2017-11-03 07:53:05', '2017-11-03 07:53:05'),
+(40, 1, '2018-04-01', 32, '2017-11-03 07:53:28', '2017-11-03 07:53:28'),
+(41, 1, '2018-05-01', 39, '2017-11-03 07:54:13', '2017-11-03 07:54:13'),
+(42, 1, '2018-06-01', 40, '2017-11-03 07:54:45', '2017-11-03 07:54:45'),
+(43, 1, '2018-07-01', 62, '2017-11-03 07:55:06', '2017-11-03 07:55:06'),
+(44, 1, '2018-08-09', 40, '2017-11-03 07:55:27', '2017-11-03 07:55:27'),
+(45, 1, '2018-09-04', 25, '2017-11-03 07:55:50', '2017-11-03 07:55:50'),
+(46, 1, '2018-10-10', 40, '2017-11-03 07:56:11', '2017-11-03 07:56:11'),
+(47, 1, '2018-11-07', 75, '2017-11-03 07:56:31', '2017-11-03 07:56:31'),
+(48, 1, '2018-12-04', 40, '2017-11-03 07:56:52', '2017-11-03 07:56:52'),
+(49, 1, '2019-01-01', 24, '2017-11-03 08:23:17', '2017-11-03 08:23:17'),
+(50, 1, '2019-02-01', 40, '2017-11-03 08:23:33', '2017-11-03 08:23:33'),
+(51, 1, '2019-03-01', 62, '2017-11-03 08:23:57', '2017-11-03 08:23:57'),
+(52, 1, '2019-04-01', 42, '2017-11-03 08:24:30', '2017-11-03 08:24:30'),
+(53, 1, '2019-05-01', 62, '2017-11-03 08:24:51', '2017-11-03 08:24:51'),
+(54, 1, '2019-06-01', 48, '2017-11-03 08:25:49', '2017-11-03 08:25:49'),
+(55, 1, '2019-07-01', 70, '2017-11-03 08:26:19', '2017-11-03 08:26:19'),
+(56, 1, '2019-08-01', 44, '2017-11-03 08:26:49', '2017-11-03 08:26:49'),
+(57, 1, '2019-09-01', 40, '2017-11-03 08:27:07', '2017-11-03 08:27:07'),
+(58, 1, '2019-10-01', 48, '2017-11-03 08:27:31', '2017-11-03 08:27:31'),
+(59, 1, '2019-11-01', 72, '2017-11-03 08:27:53', '2017-11-03 08:27:53'),
+(60, 1, '2019-12-01', 41, '2017-11-03 08:28:13', '2017-11-03 08:28:13'),
+(63, 2, '2017-11-05', 40, '2017-11-03 21:00:15', '2017-11-03 21:00:15');
 
 -- --------------------------------------------------------
 
@@ -301,6 +359,12 @@ ALTER TABLE `stock_bahans`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `suppliers`
+--
+ALTER TABLE `suppliers`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `transaksis`
 --
 ALTER TABLE `transaksis`
@@ -321,12 +385,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bahans`
 --
 ALTER TABLE `bahans`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `komoditas`
 --
 ALTER TABLE `komoditas`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `lahans`
 --
@@ -336,7 +400,7 @@ ALTER TABLE `lahans`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `petanis`
 --
@@ -346,17 +410,22 @@ ALTER TABLE `petanis`
 -- AUTO_INCREMENT for table `produksis`
 --
 ALTER TABLE `produksis`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `stock_bahans`
 --
 ALTER TABLE `stock_bahans`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `suppliers`
+--
+ALTER TABLE `suppliers`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `transaksis`
 --
 ALTER TABLE `transaksis`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 --
 -- AUTO_INCREMENT for table `users`
 --
