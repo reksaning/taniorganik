@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-<h1>Data Komoditas</h1>	
+<h1>Data Supplier</h1>	
 
 	<div>
 	{{-- <h1>Rata tanam {{ \App\Komoditas::rataLamaTanam() }}</h1> --}}
@@ -9,26 +9,24 @@
 	  <table class="table table-hover">
 	        <tr>
 	        	<th> No </th>
-	            <th> komoditas </th>
-	            <th> lama tanam </th>
-	            <th> kapasitas /m<sup>2</sup></th>
+	            <th> Supplier </th>
+	            <th> Alamat </th>
 	            <th></th>
 			</tr>
 
 	        <?php $nomor = 0; ?>
-	        @foreach ($komoditas as $komoditas)
+	        @foreach ($supplier as $supplier)
 
 	        <?php $nomor++ ?> 
 	        <tr>
 	        	<th> {{$nomor}}</th>
-	            <td> {{$komoditas->nama}}</td>
-	            <td> {{$komoditas->waktu}} </td>
-	            <td> {{$komoditas->kapasitas}} </td>
+	            <td> {{$supplier->name}}</td>
+	            <td> {{$supplier->alamat}} </td>
 
 	            <td>
-	            <a href="komoditas/edit/{{ $komoditas->id }}" class="btn btn-info btn-sm" role="button ">edit</a>
+	            <a href="supplier/edit/{{ $supplier->id }}" class="btn btn-info btn-sm" role="button ">edit</a>
 
-	            <form action="/komoditas/{{$komoditas->id}}" method="POST">
+	            <form action="/supplier/{{$supplier->id}}" method="POST">
 	             {{ csrf_field() }}
 	             {{ method_field('DELETE') }}
 		            <button onclick="return confirm('Anda yakin akan menghapus?')" type="submit" class="btn btn-danger btn-sm">hapus</button>
@@ -39,7 +37,7 @@
 	        </tr>
 	        @endforeach
 	</table>
-	<a href="/komoditas/create" class="btn btn-info" role="button">Tambahkan +</a>
+	<a href="/supplier/create" class="btn btn-info" role="button">Tambahkan +</a>
 	
 	</div>
       

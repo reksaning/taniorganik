@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\komoditas;
+use App\Transaksi;
+use App\Produksi;
 class DashboardController extends Controller
+
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +16,24 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('layouts.master');    
+
+        $komoditases=Komoditas::all();
+
+
+
+        if (request()->has('komoditas_id')) {
+            $dataGrafiks=Transaksi::where('komoditas_id', request('komoditas_id'))->pluck('jumlah');
+            $dataGrafiksProd=Produksi::where('komoditas_id', request('komoditas_id'))->pluck('jumlah');
+            $bulanSales=Transaksi::where('komoditas_id', request('komoditas_id'))->pluck('komoditas_id')->first();
+        } 
+
+        else {
+            $dataGrafiks = null ;
+            $dataGrafiksProd = null ;
+            $komoditases1 = null ;
+        }
+
+        return view('dashboards.home', compact('komoditases','dataGrafiks','dataGrafiksProd','bulanSales'));    
     }
 
     /**

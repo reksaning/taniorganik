@@ -51,16 +51,17 @@
                 <tr>
                     <th> No </th>
                     <th> Bulan </th>
-                    <th> jumlah terjual </th>
+                    <th> Permintaan (hasil ramal) </th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
+            
                 @if ($forecasts != null)
                     @foreach ($forecasts as $forecast)
                         <tr>
                             <td>{{ $loop->index+1 }}</td>
-                            <td></td>
+                            <td>{{ $lastMonth->addMonths(1)->format('F Y')}}</td>
                             <td>{{ $forecast }}</td>
                         </tr>
                     @endforeach

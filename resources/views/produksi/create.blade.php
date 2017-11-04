@@ -11,54 +11,39 @@
 		{{csrf_field()}}
 
 	<div class="col-sm-6">
+		<input type="hidden" name="supplier_id" value="{{ request('supplier_id') }}"><label>BAJAN</label>
 
-		<div class="form-group">
-			<label for="title">Tanggal</label>
-		    <div class="input-group date " data-date="" data-date-format="yyyy-mm-dd">
-		          <input class="form-control" id="tanggal" type="text" name="tanggal" readonly="readonly">
-		          <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-		    </div>
-		</div>
+	<div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th> Komoditas </th>
+			</tr>
+		</thead>
+		<tbody>
 
-    <div class="komoditas">
-		<div class="form-group">
-			<label for="komoditas_id">Nama Sayuran</label>
-				<select class="form-control" id="komoditas_id" name="komoditas_id">
-				@foreach ($komoditases as $komoditas)
-					<option value="{{$komoditas->id}}">{{$komoditas->nama}}</option>
-				@endforeach
-				</select>
-		</div> 
-	</div>
+			@foreach ($komoditases as $komoditas)
+			<tr>
+				<th>
+					
+					<input type="hidden" name="komoditas_id" value="{{$komoditas->id}}"><label>{{$komoditas->nama}} </label>
+					<input type="integer" class="form-control" id="jumlah" name="jumlah">
+				</th>
+			</tr>		
+			@endforeach
 
+		</tbody>
+	</table>
 
-		<div class="form-group">
-			<label for="title">Jumlah</label>
-			<input type="integer" class="form-control" id="jumlah" name="jumlah">
-		</div>
-
-
-			<hr>
-		<div class="row">	
+	<div class="row">	
 			<div class="form-group">
 				<button type="submit" class="btn btn-secondary">Kirim</button>
 			</div>
 		</div>
-	</div>
-	
+
 	</form>
 	@include('layouts.errors')
 
-
-
-
-
-
-
-      <script src="public/js/bootstrap-datepicker.js"></script>
-<script>
-$(".input-group.date").datepicker({autoclose: true, todayHighlight: true});
-</script>
 
   
 @endsection

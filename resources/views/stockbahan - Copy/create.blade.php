@@ -3,10 +3,10 @@
 
 
 
-<h1>Input Data Transaksi</h1>
+<h1>Input Stock Bahan</h1>
 	<hr>
 
-	<form method="POST" action="/transaksi">
+	<form method="POST" action="/stockbahan">
 		{{csrf_field()}}
 
 	<div class="col-sm-6">
@@ -19,12 +19,12 @@
 		    </div>
 		</div>
 		
-    <div class="komoditas">
+    <div class="bahan">
 		<div class="form-group">
-			<label for="komoditas_id">Nama Sayuran</label>
-				<select class="form-control" id="komoditas_id" name="komoditas_id">
-				@foreach ($komoditases as $komoditas)
-					<option value="{{$komoditas->id}}">{{$komoditas->nama}}</option>
+			<label for="bahan_id">Bahan Kemas</label>
+				<select class="form-control" id="bahan_id" name="bahan_id">
+				@foreach ($bahans as $bahan)
+					<option value="{{$bahan->id}}">{{$bahan->nama}}</option>
 				@endforeach
 
 				</select>
@@ -59,5 +59,6 @@
 	<script>
 	$(".input-group.date").datepicker({autoclose: true, todayHighlight: true});
 	</script>
+
   
 @endsection

@@ -19,6 +19,7 @@ Route::get('/', function () {
 //Dashboard
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
+
 //iki komoditas
 Route::get('/komoditas', 'KomoditasController@index')->name('komoditas');
 Route::get('/komoditas/create', 'KomoditasController@create');
@@ -76,18 +77,33 @@ Route::get('/lahan/edit/{lahan}','LahanController@edit');
 Route::put('/lahan/{lahan}','LahanController@update');
 Route::delete('/lahan/{lahan}','LahanController@destroy');
 
-
 //data lahan
+Route::get('/supplier', 'SupplierController@index')->name('supplier');
+Route::get('/supplier/create', 'SupplierController@create');
+Route::post('/supplier','SupplierController@store');
+Route::get('/supplier/edit/{supplier}','SupplierController@edit');
+Route::put('/supplier/{supplier}','SupplierController@update');
+Route::delete('/supplier/{supplier}','SupplierController@destroy');
+
+//data peramalan
 Route::get('/peramalan', 'PeramalanController@index')->name('peramalan');
 Route::post('/peramalan','PeramalanController@index');
 
 
 Route::get('/test', function()
 {
+	// $transaksis = \App\Transaksi::dekomposisi();
 	$transaksis = \App\Transaksi::dekomposisi();
-
 	return $transaksis;
 });
+
+Route::get('/MA', function()
+{
+	// $transaksis = \App\Transaksi::dekomposisi();
+	return \App\Transaksi::movingAverage();
+});
+
+
 
 Route::get('/test2', function()
 {

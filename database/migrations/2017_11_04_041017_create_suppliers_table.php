@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProduksisTable extends Migration
+class CreateSuppliersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateProduksisTable extends Migration
      */
     public function up()
     {
-        Schema::create('produksis', function (Blueprint $table) {
+        Schema::create('suppliers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('komoditas_id');
-            $table->integer('supplier_id');
-            $table->date('tanggal');
-            $table->integer('jumlah');
+            $table->string('name');
+            $table->string('alamat');
             $table->timestamps();
+
         });
     }
 
@@ -30,6 +29,6 @@ class CreateProduksisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('produksis');
+        Schema::dropIfExists('suppliers');
     }
 }

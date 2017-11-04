@@ -1,44 +1,77 @@
 @extends('layouts.master')
 
 @section('content')
-<h1>Rekap Transaksi</h1> 
+<div class="panel panel-default">
+    <div class="panel-body"><h2>Grafik</h2></div>
+</div>
 
-  <div>
-  {{-- <h1>Rata tanam {{ \App\Komoditas::rataLamaTanam() }}</h1> --}}
-  
-    <table class="table table-hover">
-          <tr>
-            <th> No </th>
-              <th> tanggal </th>
-              <th> bahan kemas </th>
-              <th> jumlah </th>
-              <th></th>
-      </tr>
+<div class="row">
+    <div class="col-md-4 col">
+    <div class="panel panel-default">
+        <div class="panel-heading">Pengaturan<i class="fa fa-gear fa-fw"></i></div>
+        <div class="panel-body">
 
-          <?php $nomor = 0; ?>
-          @foreach ($stockbahan as $stockbahan)
+            <form method="GET" action="/peramalan">
+                <div class="form-group">
+                    <label for="komoditas_id">Nama Sayuran</label>
+                        <select class="form-control" id="komoditas_id" name="komoditas_id">
+                            @foreach ($komoditases as $komoditas)
+                                <option value="{{$komoditas->id}}">{{$komoditas->nama}}</option>
+                            @endforeach
+                        </select>
+                </div>
 
-          <?php $nomor++ ?> 
-          <tr>
-            <th> {{$nomor}}</th>
-              <td> {{$stockbahan->tanggal}}</td>
-              <td> {{$stockbahan->bahan->nama}} </td>
-              <td> {{$stockbahan->jumlah}} </td>
-              <td><a href="stockbahan/edit/{{ $stockbahan->id }}" class="btn btn-info btn-sm" role="button ">edit</a>
-              <form action="/stockbahan/{{$stockbahan->id}}" method="POST">
-               {{ csrf_field() }}
-               {{ method_field('DELETE') }}
-                <button onclick="return confirm('Anda yakin akan menghapus?')" type="submit" class="btn btn-danger btn-sm">hapus</button>
-              </form>
-              </td>
-          </tr>
-          @endforeach
-  </table>
-  <a href="/stockbahan/create" class="btn btn-info" role="button">Tambahkan +</a>
-  
+                <div class="form-group">
+                    <label for="periode">Periode (bulan)</label>
+                        <select class="form-control" id="periode" name="periode">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>12</option>
+                        </select>
+                </div>  
+
+                <div class="row"> 
+                    <div class="form-group">
+                        <button type="submit" class="btn btn btn-md">Proses</button>
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+        </div>
+    </div>
+
+    <div class="col-md-8 col">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th> No </th>
+                    <th> Bulan </th>
+                    <th> Permintaan (hasil ramal) </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                @if ($forecasts != null)
+                    @foreach ($forecasts as $forecast)
+                        <tr>
+                            <td>{{ $loop->index+1 }}</td>
+                            <td>{{ $lastMonth->addMonths(1)->format('F Y')}}</td>
+                            <td>{{ $forecast }}</td>
+                        </tr>
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
+    </div>
   </div>
-      
-
-
-  
+  <script type="text/javascript">
+      $("#periode").val("{{ request('periode') }}");
+      $("#komoditas_id").val("{{ request('komoditas_id') }}");
+  </script>  
 @endsection

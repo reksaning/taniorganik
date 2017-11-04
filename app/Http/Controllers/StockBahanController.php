@@ -15,8 +15,8 @@ class StockBahanController extends Controller
     public function index()
     {
 
-        $stockbahan=stockbahan::all();
-        return view('stockbahan.index',compact('stockbahan'));
+        $stockbahans=stockbahan::all();
+        return view('stockbahan.index',compact('stockbahans'));
     }
 
     /**
@@ -28,8 +28,8 @@ class StockBahanController extends Controller
     {
 
         $bahans=Bahan::all();
-        
-        return view('stockbahan.create',compact('bahans'));  
+        $stockbahan=stockbahan::all();
+        return view('stockbahan.create',compact('bahans','stockbahan'));  
     }
 
     /**

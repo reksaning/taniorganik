@@ -19,11 +19,16 @@ class PeramalanController extends Controller
 
         if (request()->has('komoditas_id')) {
             $forecasts = Transaksi::dekomposisi();
+            $lastMonth = Transaksi::where('komoditas_id', request('komoditas_id'))->orderBy('tanggal', 'desc')->first()->tanggal;
         } else {
             $forecasts = null ;
+            $lastMonth = null ;
+
         }
+
+
         // return $forecasts;
-        return view('ramal.index',compact('transaksi','komoditases', 'forecasts'));
+        return view('ramal.index',compact('transaksi','komoditases', 'forecasts','lastMonth'));
     }
 
     /**

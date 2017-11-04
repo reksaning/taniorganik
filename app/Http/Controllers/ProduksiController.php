@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Komoditas;
 use App\Produksi;
+use App\Supplier;
 use Illuminate\Http\Request;
 
 class ProduksiController extends Controller
@@ -16,7 +17,8 @@ class ProduksiController extends Controller
     {
         $komoditas=Komoditas::all();
         $produksi=Produksi::all();
-        return view('produksi.index',compact('komoditas', 'produksi'));
+        $suppliers=Supplier::all();
+        return view('produksi.index', compact('komoditas', 'produksi','suppliers'));
     }
 
     /**
@@ -27,11 +29,13 @@ class ProduksiController extends Controller
     public function create()
     {
 
-
         $komoditases=Komoditas::all();
+        $suppliers=Supplier::all();
         
-        return view('produksi.create',compact('komoditases'));
+        return view('produksi.create', compact('komoditases','suppliers'));
     }
+
+
 
     /**
      * Store a newly created resource in storage.

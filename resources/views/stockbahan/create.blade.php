@@ -3,7 +3,7 @@
 
 
 
-<h1>Input Stock Bahan</h1>
+<h1>Plasma</h1>
 	<hr>
 
 	<form method="POST" action="/stockbahan">
@@ -15,28 +15,43 @@
 			<label for="title">Tanggal</label>
 		    <div class="input-group date " data-date="" data-date-format="yyyy-mm-dd">
 		          <input class="form-control" id="tanggal" type="text" name="tanggal" readonly="readonly">
-		          <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+		          <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
 		    </div>
 		</div>
 		
-    <div class="bahan">
-		<div class="form-group">
-			<label for="bahan_id">Bahan Kemas</label>
-				<select class="form-control" id="bahan_id" name="bahan_id">
+		<table class="table">
+		    <thead>
+		      <tr>
+		        <th rowspan="2">No</th>
+		        <th rowspan="2">Komoditas</th>
+		        <th colspan="3">Supplier</th>
+		        <tr>
+		        @foreach ($bahans as $bahan)
+		        	<th>{{$bahan->nama}}</th>
+		        @endforeach
+		        </tr>
+
+		      </tr>
+		    </thead>
+			<tbody>
+			    <?php $nomor = 0; ?>
 				@foreach ($bahans as $bahan)
-					<option value="{{$bahan->id}}">{{$bahan->nama}}</option>
-				@endforeach
+			        <?php $nomor++ ?> 
+			        <tr>
+			            <th> {{$nomor}}</th>
+			            	<td> {{$bahan->nama}}</td>
+			            	
+			        </tr>
+	          	@endforeach
+		    </tbody>
+		</table>
 
-				</select>
-		</div> 
-	</div>
 
-
-		<div class="form-group">
+		{{-- <div class="form-group">
 			<label for="title">Jumlah</label>
 			<input type="integer" class="form-control" id="jumlah" name="jumlah">
 		</div>
-
+ --}}
 
 			<hr>
 		<div class="row">	
@@ -55,10 +70,10 @@
 
 
 
-      <script src="public/js/bootstrap-datepicker.js"></script>
-<script>
-$(".input-group.date").datepicker({autoclose: true, todayHighlight: true});
-</script>
+ 	<script src="/js/bootstrap-datepicker.js"></script>
+	<script>
+	$(".input-group.date").datepicker({autoclose: true, todayHighlight: true});
+	</script>
 
   
 @endsection
