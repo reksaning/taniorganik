@@ -42,7 +42,7 @@ Route::get('/produksi', 'ProduksiController@index')->name('produksi');
 Route::get('/produksi/create', 'ProduksiController@create');
 Route::post('/produksi','ProduksiController@store');
 Route::get('/produksi/edit/{produksi}','ProduksiController@edit');
-Route::put('/produksi/{produksi}','ProduksiController@update');
+Route::put('/produksi','ProduksiController@update');
 Route::delete('/produksi/{produksi}','ProduksiController@destroy');
 
 // bahan baku

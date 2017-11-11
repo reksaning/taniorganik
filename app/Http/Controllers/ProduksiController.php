@@ -32,11 +32,16 @@ class ProduksiController extends Controller
      */
     public function create()
     {
+        $produksi=Produksi::where('tanggal', request('tanggal'))->where('supplier_id', request('supplier_id'))->get() ;
 
-        $komoditases=Komoditas::all();
-        $suppliers=Supplier::all();
-        
-        return view('produksi.create', compact('komoditases','suppliers'));
+    
+        if (empty($produksi->first())) {
+            $komoditases=Komoditas::all();
+            return view('produksi.create', compact(['produksi', 'komoditases']));
+        }
+         
+        return view('produksi.edit', compact('produksi', 'komoditases' ));
+
     }
 
 
@@ -94,6 +99,8 @@ class ProduksiController extends Controller
          $komoditases=Komoditas::all();
 
         return view('produksi.edit',compact('produksi','komoditases'));
+
+
     }
 
     /**
@@ -104,26 +111,22 @@ class ProduksiController extends Controller
      * @return \Illuminate\Http\Response
      */
 
- public function update(Produksi $produksi, Request $request)
+ public function update(Request $request)
 
     {
 
-        $this->validate($request, [
+        $n = 0;
+        foreach ($request->produksi_id as $id) {
+            Produksi::find($id)->update([
+                'jumlah' => $request->jumlah[$n],
+            ]);
+            $n++;
+        }
 
-            'komoditas_id'       =>  'required',
-            'tanggal'        =>  'required',
-            'jumlah'   =>  'required'
-
-        ]);
-
-        $produksi->update([
-            'komoditas_id' => $request->komoditas_id,
-            'tanggal' => $request->tanggal,
-            'jumlah' => $request->jumlah,
-        ]);
 
         return redirect('/produksi');
     }
+
     public function destroy(Produksi $produksi)
     {
         $produksi->delete();

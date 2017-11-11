@@ -28,7 +28,7 @@
 				<th>
 					
 					<input type="hidden" name="komoditas_id[{{ $loop->index }}]" value="{{$komoditas->id}}"><label>{{$komoditas->nama}} </label>
-					<input type="integer" class="form-control" id="jumlah" name="jumlah[{{ $loop->index }}]">
+					<input type="integer" class="form-control" id="jumlah" name="jumlah[{{ $loop->index }}]" value="0">
 				</th>
 			</tr>		
 			@endforeach

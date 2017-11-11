@@ -18,7 +18,7 @@ class PeramalanController extends Controller
         $komoditases=Komoditas::all();
 
         if (request()->has('komoditas_id')) {
-            $forecasts = Transaksi::dekomposisi();
+            $forecasts = Transaksi::dekomposisi()['H'];
             $lastMonth = Transaksi::where('komoditas_id', request('komoditas_id'))->orderBy('tanggal', 'desc')->first()->tanggal;
         } else {
             $forecasts = null ;

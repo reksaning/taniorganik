@@ -116,34 +116,55 @@ class Transaksi extends Model
 
 		$val = Transaksi::dekomposisi();
 		$sumy = $val['sumy'];
-		$alpa=array("0.1","0.2");
 
-		echo $alpa;
-
-
+		$alpas=[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9];
+		$n=1;
+		// $SE[1]=$sumy[1];
 
 		
+		foreach ($alpas as $alpa) {
+			for ($i=2; $i <= count($sumy);) { 
+				$sumi[$i]=$sumy;
+
+
+       		// $SES[$i]=$SE[$i-1]+$alpa*($sumy[$i-1]*$SE[$i-1]);
+       		$i++;
+
+
+
+
+			// $u[$n]=$alpa;	
+			// $n++;
+		}
+
+		// return $u;
+		return $sumy;
+
 	}
+
+}
+
+		
+
 
 	public static function DES()
 	{
-		$alpa=[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9];
+		$alpas=[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9];
 
-		foreach (Transaksi::getMonth() as $bulan) {
-			$val['sumy'][$bulan] = Transaksi::where('tanggal', 'like', "%$bulan%")->sum('jumlah');
+		return $alpas;
 		}
 
 
-		foreach ($alpa as $alpa) {
-			foreach (Transaksi::getMonth() as $bulan) {
-			$val['H'][$alpa] = $val['sumy'][$bulan]*$alpa;
-			}
-		}
+		// foreach ($alpas as $alpa) {
+		// 	foreach (Transaksi::getMonth() as $bulan) {
+		// 	$val['H'][$alpa] = $val['sumy'][$bulan]*$alpa;
+		// 	}
+		// }
 
-		return ($val['H']);
+		// return ($val['H']);
 			
 		
-	}
+
 		
 	
 
