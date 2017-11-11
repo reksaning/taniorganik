@@ -26,6 +26,14 @@
           <th><a href="/produksi/create?supplier_id={{$supplier->id}}&tanggal={{ request('tanggal') }}">{{$supplier->name}}</a></th>
         @endforeach
       </tr>
+      @foreach ($komoditases as $komoditas)
+        <tr>
+          <td>{{ $komoditas->nama }}</td>
+          @foreach ($suppliers as $supplier)
+            <td>{{ $produksi[$komoditas->id][$supplier->id] }}</td>
+          @endforeach
+        </tr>
+      @endforeach
 
     </thead>
 

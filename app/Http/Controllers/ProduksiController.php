@@ -15,10 +15,14 @@ class ProduksiController extends Controller
      */
     public function index()
     {
-        $komoditas=Komoditas::all();
-        $produksi=Produksi::all();
+        $komoditases=Komoditas::all();
+        // $produksi=Produksi::all();
         $suppliers=Supplier::all();
-        return view('produksi.index', compact('komoditas', 'produksi','suppliers'));
+        foreach (Produksi::where('tanggal', request('tanggal'))->get() as $result) {
+            $produksi[$result->komoditas_id][$result->supplier_id] = $result->jumlah;
+        }
+        // return $produksi;
+        return view('produksi.index', compact('komoditases', 'produksi','suppliers'));
     }
 
     /**
@@ -63,7 +67,7 @@ class ProduksiController extends Controller
             ]);
             $n++;
         }
-            return redirect('/produksi');    
+            return redirect("/produksi?tanggal=$request->tanggal");    
     }
 
     /**
