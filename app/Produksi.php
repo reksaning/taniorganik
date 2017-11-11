@@ -7,11 +7,11 @@ namespace App;
 class Produksi extends Model
 {
     
-    public function komoditas()
+    public function komoditas(){
+    	return $this->belongsTo('App\Komoditas');
+    }
 
-	{
-
-	return $this->belongsTo(Komoditas::class);
-
+	public function supplier(){
+		return $this->belongsTo('App\Supplier');
 	}
 }
