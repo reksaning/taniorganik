@@ -117,32 +117,41 @@ class Transaksi extends Model
 		$val = Transaksi::dekomposisi();
 		$sumy = $val['sumy'];
 
-		$alpas=[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9];
-		$n=1;
-		// $SE[1]=$sumy[1];
+		$alpas = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9];
+		$betas = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9];
 
+		$n=0;
 		
 		foreach ($alpas as $alpa) {
-			for ($i=2; $i <= count($sumy);) { 
-				$sumi[$i]=$sumy;
 
+			
+			$m = 0;
 
-       		// $SES[$i]=$SE[$i-1]+$alpa*($sumy[$i-1]*$SE[$i-1]);
-       		$i++;
+			foreach ($betas as $beta) {
 
+				$SES[$m][1] = $sumy[1];
 
+				for ($i=2; $i <= count($sumy);) { 
 
+		       		$SES[$m][$i] = $SES[$m][$i-1]*$beta + $alpa*($sumy[$i-1] - $SES[$m][$i-1]);
+		       		$i++;
 
-			// $u[$n]=$alpa;	
-			// $n++;
+				}
+
+				$m++;
+
+			}
+
+			$SESS[$n] = $SES;
+
+			$n++;
+			// return $u;
+			// return $sumy;
 		}
 
-		// return $u;
-		return $sumy;
+		return $SESS;
 
 	}
-
-}
 
 		
 
