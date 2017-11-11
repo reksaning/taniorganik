@@ -5,15 +5,14 @@
 <h1>Input Data Transaksi</h1>
   <hr>
 
-  <form method="POST" action="/produksi">
-    {{csrf_field()}}
+  <form method="GET" action="/produksi">
 
   <div class="col-sm-6">
 
     <div class="form-group">
       <label for="title">Tanggal</label>
         <div class="input-group date " data-date="" data-date-format="yyyy-mm-dd">
-              <input class="form-control" id="tanggal" type="text" name="tanggal" readonly="readonly">
+              <input class="form-control" id="tanggal" type="text" name="tanggal" readonly="readonly" value="{{ request('tanggal') }}">
               <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
         </div>
     </div>
@@ -24,7 +23,7 @@
       <tr>
         <th> Nama Komoditas </th>
         @foreach ($suppliers as $supplier)
-          <th><a href="/produksi/create?supplier_id={{$supplier->id}}">{{$supplier->name}}</a></th>
+          <th><a href="/produksi/create?supplier_id={{$supplier->id}}&tanggal={{ request('tanggal') }}">{{$supplier->name}}</a></th>
         @endforeach
       </tr>
 

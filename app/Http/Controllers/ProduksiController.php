@@ -47,11 +47,22 @@ class ProduksiController extends Controller
     {
         $this->validate(request(), [
                 'komoditas_id'       =>  'required',
+                'supplier_id'   =>  'required',
                 'tanggal'        =>  'required',
                 'jumlah'   =>  'required'
                 ]);
 
-            Produksi::create(request(['komoditas_id','tanggal','jumlah']));
+        // return $request->all();
+        $n=0;
+        foreach ($request->jumlah as $jumlah) {
+            $produksi = Produksi::create([
+                'komoditas_id' => $request->komoditas_id[$n],
+                'supplier_id' => $request->supplier_id,
+                'tanggal' => $request->tanggal,
+                'jumlah' => $jumlah,
+            ]);
+            $n++;
+        }
             return redirect('/produksi');    
     }
 

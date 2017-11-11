@@ -12,6 +12,7 @@
 
 	<div class="col-sm-6">
 		<input type="hidden" name="supplier_id" value="{{ request('supplier_id') }}"><label>BAJAN</label>
+		<input type="hidden" name="tanggal" value="{{ request('tanggal') }}">
 
 	<div>
 	<table class="table">
@@ -26,8 +27,8 @@
 			<tr>
 				<th>
 					
-					<input type="hidden" name="komoditas_id" value="{{$komoditas->id}}"><label>{{$komoditas->nama}} </label>
-					<input type="integer" class="form-control" id="jumlah" name="jumlah">
+					<input type="hidden" name="komoditas_id[{{ $loop->index }}]" value="{{$komoditas->id}}"><label>{{$komoditas->nama}} </label>
+					<input type="integer" class="form-control" id="jumlah" name="jumlah[{{ $loop->index }}]">
 				</th>
 			</tr>		
 			@endforeach

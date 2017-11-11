@@ -116,14 +116,12 @@ class Transaksi extends Model
 
 		$val = Transaksi::dekomposisi();
 		$sumy = $val['sumy'];
-		$alpa=[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9];
+		$alpa=array("0.1","0.2");
 
-		foreach ($alpa as $alpa) {
-			$SES[$alpa] = $sumy[1]*$alpa;
-		}
+		echo $alpa;
 
-		return $SES1;
-			
+
+
 		
 	}
 

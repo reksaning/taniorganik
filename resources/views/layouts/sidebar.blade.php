@@ -6,7 +6,7 @@
 			<li><a href="/dashboard"><i class="fa fa-home fa-fw"></i>Home</a></li>
 			<li><a href="/komoditas"><i class="fa fa-list-alt fa-fw"></i>Komoditas</a></li>
 			<li><a href="/transaksi"><i class="fa fa-truck fa-fw"></i>Transaksi</a></li>
-			<li><a href="/produksi"><i class="fa fa-gear fa-fw"></i>Produksi</a></li>
+			<li><a href="/produksi?tanggal={{ date('Y-m-d') }}"><i class="fa fa-gear fa-fw"></i>Produksi</a></li>
 			<li><a href="/peramalan"><i class="fa fa-gear fa-fw"></i>Peramalan Pasar</a></li>
 			<li><a href="/bahan"><i class="fa fa-dropbox fa-fw"></i>Bahan Kemas</a></li>
 			<li><a href="/stockbahan"><i class="fa fa-gift fa-fw"></i>Update Bahan Kemas</a></l>
