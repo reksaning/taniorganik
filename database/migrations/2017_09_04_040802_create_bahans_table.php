@@ -13,10 +13,10 @@ class CreateBahansTable extends Migration
      */
     public function up()
     {
-        Schema::create('bahans', function (Blueprint $table) {
+        Schema::create('packagings', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama');
-            $table->integer('harga');
+            $table->string('name');
+            $table->integer('quantity');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateBahansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bahans');
+        Schema::dropIfExists('packagings');
     }
 }

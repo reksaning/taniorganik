@@ -1,27 +1,27 @@
 @extends('layouts.master')
 
 @section('content')
-	<h1>Edit Data Komoditas</h1>
+	<h1>Edit Data Supplier</h1>
 	<hr>
 
-	<form method="POST" action="/komoditas/{{$komoditas->id}}">
+	<form method="POST" action="/supplier/{{$supplier->id}}">
 		{{csrf_field()}}
 		{{ method_field('PUT') }}
 
 	<div class="col-sm-6">
 		<div class="form-group">
-			<label for="title">Nama Komoditas</label>
-			<input value="{{$komoditas->nama}}" type="text" class="form-control" id="nama" name="nama">
+			<label for="title">Nama Supplier</label>
+			<input value="{{$supplier->name}}" type="text" class="form-control" id="name" name="name">
 		</div>
 
 		<div class="form-group">
-			<label for="title">Lama Tanam (hari)</label>
-			<input value="{{ $komoditas->waktu }}" type="integer" class="form-control" id="waktu" name="waktu">
+			<label for="title">Inisial</label>
+			<input value="{{ $supplier->initial }}" type="text" class="form-control" id="initial" name="initial">
 		</div>
 
 		<div class="form-group">
-			<label for="body">Kapasitas Produksi (kg/m<sup>2</sup>) </label>
-			<input type="integer" value="{{ $komoditas->kapasitas }}" class="form-control" id="kapasitas" name="kapasitas">
+			<label for="body">Alamat </label>
+			<input type="integer" value="{{ $supplier->address }}" class="form-control" id="address" name="address">
 		</div>
 			<hr>
 		<div class="row">	

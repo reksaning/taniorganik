@@ -20,13 +20,20 @@ Route::get('/', function () {
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
 
-//iki komoditas
-Route::get('/komoditas', 'KomoditasController@index')->name('komoditas');
-Route::get('/komoditas/create', 'KomoditasController@create');
-Route::post('/komoditas','KomoditasController@store');
-Route::get('/komoditas/edit/{komoditas}','KomoditasController@edit');
-Route::put('/komoditas/{komoditas}','KomoditasController@update');
-Route::delete('/komoditas/{komoditas}','KomoditasController@destroy');
+//iki commodity
+Route::get('/commodity', 'CommodityController@index')->name('commodity');
+Route::get('/commodity/create', 'CommodityController@create');
+Route::post('/commodity','CommodityController@store');
+Route::get('/commodity/edit/{commodity}','CommodityController@edit');
+Route::put('/commodity/{commodity}','CommodityController@update');
+Route::delete('/commodity/{commodity}','CommodityController@destroy');
+
+Route::get('/demand', 'DemandController@index')->name('demand');
+Route::get('/demand/create', 'DemandController@create');
+Route::post('/demand','DemandController@store');
+Route::get('/demand/edit/{demand}','DemandController@edit');
+Route::put('/demand','DemandController@update');
+Route::delete('/demand/{demand}','DemandController@destroy');
 
 
 // iki transaksi
@@ -37,29 +44,29 @@ Route::get('/transaksi/edit/{transaksi}','TransaksiController@edit');
 Route::put('/transaksi/{transaksi}','TransaksiController@update');
 Route::delete('/transaksi/{transaksi}','TransaksiController@destroy');
 
-// iki produksi
-Route::get('/produksi', 'ProduksiController@index')->name('produksi');
-Route::get('/produksi/create', 'ProduksiController@create');
-Route::post('/produksi','ProduksiController@store');
-Route::get('/produksi/edit/{produksi}','ProduksiController@edit');
-Route::put('/produksi','ProduksiController@update');
-Route::delete('/produksi/{produksi}','ProduksiController@destroy');
+// iki bom
+Route::get('/bom', 'BomController@index')->name('bom');
+Route::get('/bom/create', 'BomController@create');
+Route::post('/bom','BomController@store');
+Route::get('/bom/edit/{bom}','BomController@edit');
+Route::put('/bom','BomController@update');
+Route::delete('/bom/{bom}','BomController@destroy');
 
-// bahan baku
-Route::get('/bahan', 'BahanController@index')->name('bahan');
-Route::get('/bahan/create', 'BahanController@create');
-Route::post('/bahan','BahanController@store');
-Route::get('/bahan/edit/{bahan}','BahanController@edit');
-Route::put('/bahan/{bahan}','BahanController@update');
-Route::delete('/bahan/{bahan}','BahanController@destroy');
+// packaging baku
+Route::get('/packaging', 'PackagingController@index')->name('packaging');
+Route::get('/packaging/create', 'PackagingController@create');
+Route::post('/packaging','PackagingController@store');
+Route::get('/packaging/edit/{packaging}','PackagingController@edit');
+Route::put('/packaging/{packaging}','PackagingController@update');
+Route::delete('/packaging/{packaging}','PackagingController@destroy');
 
-// stock bahan baku
-Route::get('/stockbahan', 'StockBahanController@index')->name('bahan');
-Route::get('/stockbahan/create', 'StockBahanController@create');
-Route::post('/stockbahan','StockBahanController@store');
-Route::get('/stockbahan/edit/{stockbahan}','StockBahanController@edit');
-Route::put('/stockbahan/{stockbahan}','StockBahanController@update');
-Route::delete('/stockbahan/{stockbahan}','StockBahanController@destroy');
+// stock packaging baku
+Route::get('/stock', 'StockController@index')->name('packaging');
+Route::get('/stock/create', 'StockController@create');
+Route::post('/stock','StockController@store');
+Route::get('/stock/edit/{stock}','StockController@edit');
+Route::put('/stock/{stock}','StockController@update');
+Route::delete('/stock/{stock}','StockController@destroy');
 
 //data petani
 Route::get('/petani', 'PetaniController@index')->name('petani');
@@ -85,10 +92,11 @@ Route::get('/supplier/edit/{supplier}','SupplierController@edit');
 Route::put('/supplier/{supplier}','SupplierController@update');
 Route::delete('/supplier/{supplier}','SupplierController@destroy');
 
+
 //data peramalan
 Route::get('/peramalan', 'PeramalanController@index')->name('peramalan');
 Route::post('/peramalan','PeramalanController@index');
-
+Route::get('/MRP', 'MRPController@index')->name('supplier');
 
 Route::get('/test', function()
 {
@@ -113,8 +121,8 @@ Route::get('/SES', function()
 
 Route::get('/test2', function()
 {
-	$transaksis[0] = \App\Transaksi::all()->sortBy('komoditas_id');
-	$transaksis[1] = \App\Transaksi::all()->sortBy('komoditas_id')->values()->all();
+	$transaksis[0] = \App\Transaksi::all()->sortBy('commodity_id');
+	$transaksis[1] = \App\Transaksi::all()->sortBy('commodity_id')->values()->all();
 
 	return $transaksis;
 });

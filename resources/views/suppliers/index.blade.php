@@ -10,18 +10,20 @@
 	        <tr>
 	        	<th> No </th>
 	            <th> Supplier </th>
+	            <th> Inisial </th>
 	            <th> Alamat </th>
 	            <th></th>
 			</tr>
 
 	        <?php $nomor = 0; ?>
-	        @foreach ($supplier as $supplier)
+	        @foreach ($suppliers as $supplier)
 
 	        <?php $nomor++ ?> 
 	        <tr>
 	        	<th> {{$nomor}}</th>
 	            <td> {{$supplier->name}}</td>
-	            <td> {{$supplier->alamat}} </td>
+	            <td> {{$supplier->initial}}</td>
+	            <td> {{$supplier->address}} </td>
 
 	            <td>
 	            <a href="supplier/edit/{{ $supplier->id }}" class="btn btn-info btn-sm" role="button ">edit</a>

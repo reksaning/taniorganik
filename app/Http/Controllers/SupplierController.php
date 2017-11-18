@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Supplier;
-use App\Komoditas;
+use App\Commodity;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -10,17 +10,12 @@ class SupplierController extends Controller
     public function index()
     {
         
-        $supplier=Supplier::all();
+        $suppliers=Supplier::all();
 
-        return view('suppliers.index',compact('supplier'));
+        return view('suppliers.index',compact('suppliers'));
 
     }
 
-    public function show($id)
-        {
-            $supplier= Post::find($id);
-            return view('suppliers.show', compact('supplier'));
-        } 
 
     public function create()
         {
@@ -31,10 +26,11 @@ class SupplierController extends Controller
         {
             $this->validate(request(), [
                 'name'        =>  'required',
-                'alamat'       =>  'required'
+                'initial'        =>  'required',
+                'address'       =>  'required'
                 ]);
 
-            Supplier::create(request(['name','alamat']));
+            Supplier::create(request(['name','initial','address']));
             return redirect('/supplier');
         } 
 
@@ -53,13 +49,15 @@ class SupplierController extends Controller
         $this->validate($request, [
 
             'name'        =>  'required',
-            'alamat'       =>  'required',
+            'initial'       =>'required',
+            'address'       =>  'required'
 
         ]);
 
         $supplier->update([
             'name' => $request->name,
-            'alamat' => $request->alamat,
+            'initial' => $request->initial,
+            'address' => $request->address,
         ]);
 
         return redirect('/supplier');

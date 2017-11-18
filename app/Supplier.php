@@ -5,12 +5,13 @@ namespace App;
 
 class Supplier extends Model
 {
-    public function komoditas()
 
-   	{
+    public function commodity(){
+		return $this->hasManyThrough('App\Commodity', 'App\Demand');
+	}
 
-	return $this->hasManyThrough('App\Komoditas', 'App\Transaksi');
-	
+	public function bom(){
+		return $this->hasMany('App\Bom');
 	}
 
 }

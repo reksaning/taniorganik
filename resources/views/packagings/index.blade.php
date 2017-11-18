@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-<h1>Data Komoditas</h1>	
+<h1>Data Bahan Kemas</h1>	
 
 	<div>
 	{{-- <h1>Rata tanam {{ \App\Komoditas::rataLamaTanam() }}</h1> --}}
@@ -10,20 +10,20 @@
 	        <tr>
 	        	<th> No </th>
 	            <th> Bahan Kemas </th>
-	            <th> Harga </th>
+	            <th> Lama Pesan (hari) </th>
 	            <th></th>
 			</tr>
 
 	        <?php $nomor = 0; ?>
-	        @foreach ($bahan as $bahan)
+	        @foreach ($packagings as $packaging)
 
 	        <?php $nomor++ ?> 
 	        <tr>
 	        	<th> {{$nomor}}</th>
-	            <td> {{$bahan->nama}}</td>
-	            <td> {{$bahan->harga}} </td>
-	            <td><a href="bahan/edit/{{ $bahan->id }}" class="btn btn-info btn-sm" role="button ">edit</a>
-	            <form action="/bahan/{{$bahan->id}}" method="POST">
+	            <td> {{$packaging->name}}</td>
+	            <td> {{$packaging->time}} </td>
+	            <td><a href="packaging/edit/{{ $packaging->id }}" class="btn btn-info btn-sm" role="button ">edit</a>
+	            <form action="/packaging/{{$packaging->id}}" method="POST">
 	             {{ csrf_field() }}
 	             {{ method_field('DELETE') }}
 		            <button onclick="return confirm('Anda yakin akan menghapus?')" type="submit" class="btn btn-danger btn-sm">hapus</button>
@@ -32,7 +32,7 @@
 	        </tr>
 	        @endforeach
 	</table>
-	<a href="/bahan/create" class="btn btn-info" role="button">Tambahkan +</a>
+	<a href="/packaging/create" class="btn btn-info" role="button">Tambahkan +</a>
 	
 	</div>
       

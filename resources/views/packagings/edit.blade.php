@@ -1,22 +1,22 @@
 @extends('layouts.master')
 
 @section('content')
-	<h1>Edit Data Bahan Baku</h1>
+	<h1>Edit Data Bahan Kemas</h1>
 	<hr>
 
-	<form method="POST" action="/bahan/{{$bahan->id}}">
+	<form method="POST" action="/packaging/{{$packaging->id}}">
 		{{csrf_field()}}
 		{{ method_field('PUT') }}
 
 	<div class="col-sm-6">
 		<div class="form-group">
-			<label for="title">Nama Bahan Baku</label>
-			<input value="{{$bahan->nama}}" type="text" class="form-control" id="nama" name="nama">
+			<label for="title">Nama Bahan Kemas</label>
+			<input value="{{$packaging->name}}" type="text" class="form-control" id="name" name="name">
 		</div>
 
 		<div class="form-group">
-			<label for="title">Harga</label>
-			<input value="{{ $bahan->harga }}" type="integer" class="form-control" id="harga" name="harga">
+			<label for="title">Lama Pesan (hari)</label>
+			<input value="{{ $packaging->time }}" type="integer" class="form-control" id="time" name="time">
 		</div>
 			<hr>
 		<div class="row">	

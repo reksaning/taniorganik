@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="panel panel-default">
-    <div class="panel-body"><h2>Grafik</h2></div>
+    <div class="panel-body"><h2>Material Requirement Planning</h2></div>
 </div>
 
 <div class="row">

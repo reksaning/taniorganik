@@ -14,9 +14,20 @@ class Transaksi extends Model
 
 	}
 
+	public function supplier()
+	{
+		return $this->BelongsTo('App\Supplier');
+	}
+
+
 	public function getBulanAttribute()
 	{
 		return $this->tanggal->format('Y-m');
+	}
+
+	public function getPusatIdAttribute()
+	{
+		return $this->supplier->pusat_id;
 	}
 
 	public static function getMonth($month = 36)
@@ -73,6 +84,13 @@ class Transaksi extends Model
 		}
 		$val['koef']=$koef;
 
+		//error
+		for ($i=1; $i <= $x; $i++) { 
+				$H[$i] = number_format(($val['a']+$val['b']*$i)*$koef[$i], 0);
+				$error[$i] = $H[$i] - $sumy[$i];
+		}
+
+
 		if (request()->has('periode')) {
 			$periode=request('periode');
 			$a = 1;
@@ -96,6 +114,13 @@ class Transaksi extends Model
 		// $ramal= $val[a]+$val['b']*X
 	}
 
+	public static function dekom()
+	{
+		$val = Transaksi::dekomposisi();
+
+	}
+
+
 	public static function movingAverage()
 	{
 		$val = Transaksi::dekomposisi();
@@ -103,6 +128,8 @@ class Transaksi extends Model
 		
 		for ($n=4; $n <= count($sumy);) { 
 			$MA[$n] = ($sumy[$n-3]+$sumy[$n-2]+$sumy[$n-1])/3;
+
+			$error[$n] = $MA[$n] - $sumy[$n];
 			$n++;
 		}
 
@@ -111,7 +138,50 @@ class Transaksi extends Model
 	}
 
 
+
 	public static function SES()
+	{
+
+		$val = Transaksi::dekomposisi();
+		$sumy = $val['sumy'];
+		$alpas=[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9];
+
+		$n=0;
+		
+		foreach ($alpas as $alpa) {
+
+				$SES[$n][1] = $sumy[1];
+
+				for ($i=2; $i <= count($sumy);) { 
+
+		       		$SES[$n][$i] = $SES[$n][$i-1] + $alpa*($sumy[$i-1] - $SES[$n][$i-1]);
+
+		       		$error[$n][$i] = $sumy[$i-1] - $SES[$n][$i];
+		       		$i++;
+
+				}
+
+			$sumerror[$n] = array_sum($error[$n]);
+
+			$n++;
+
+			// return $u;
+			// return $sumy;
+		}
+
+		// return $SESS;
+		$key = array_keys($sumerror, min($sumerror));
+
+		return $key;
+
+	}
+
+
+
+
+
+
+	public static function DES()
 	{
 
 		$val = Transaksi::dekomposisi();
@@ -134,34 +204,40 @@ class Transaksi extends Model
 				for ($i=2; $i <= count($sumy);) { 
 
 		       		$SES[$m][$i] = $SES[$m][$i-1]*$beta + $alpa*($sumy[$i-1] - $SES[$m][$i-1]);
+
+		       		$error[$m][$i] = $sumy[$i-1]-$SES[$m][$i];
 		       		$i++;
 
+
+
 				}
+				$sumerror[$m] = array_sum($error[$m]);
 
 				$m++;
 
 			}
 
 			$SESS[$n] = $SES;
+			$errors[$n] = $error;
+			$sumerrors[$n] = $sumerror;
 
 			$n++;
+
 			// return $u;
 			// return $sumy;
 		}
 
-		return $SESS;
+		// return $SESS;
+		$key = array_keys($sumerrors, min($sumerrors));
+
+		return $key;
 
 	}
 
 		
 
 
-	public static function DES()
-	{
-		$alpas=[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9];
-
-		return $alpas;
-		}
+	
 
 
 		// foreach ($alpas as $alpa) {
