@@ -9,9 +9,7 @@ class Transaksi extends Model
    	public function komoditas()
 
 	{
-
 		return $this->BelongsTo('\App\Komoditas');
-
 	}
 
 	public function supplier()
@@ -50,14 +48,14 @@ class Transaksi extends Model
 		}
 
 		// jumlah total transaksi
-		$val['y'] = Transaksi::where('komoditas_id', request('komoditas_id'))->get()->sum('jumlah');
+		$val['y'] = Transaksi::where('komoditas_id', request('komoditas_id'))->get()->where('pusat_id', request('pusat_id'))->sum('jumlah');
 
 		// nilai perbulan dikali
 		$n = 1;
 		$val['xy'] = 0;
 		foreach (Transaksi::getMonth() as $bulan) {
 			
-			$val['sumy'][$n] = Transaksi::where('tanggal', 'like', "%$bulan%")->where('komoditas_id', request('komoditas_id'))->sum('jumlah');
+			$val['sumy'][$n] = Transaksi::where('tanggal', 'like', "%$bulan%")->where('komoditas_id', request('komoditas_id'))->get()->where('pusat_id', request('pusat_id'))->sum('jumlah');
 			$val['xy'] += $n*$val['sumy'][$n];
 			$n++;
 
@@ -72,7 +70,6 @@ class Transaksi extends Model
 		// $val['x3'] = 0;
 		for ($i=1; $i <= $x; $i++) { 
 			$Y[$i] = $val['a']+$val['b']*$i;
-			
 		}
 
 		$val['Y'] = $Y;
