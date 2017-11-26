@@ -20,14 +20,15 @@
                             @endforeach
                         </select>
                 </div>
-                <div class="form-group">
+{{--                 <div class="form-group">
                     <label for="pusat_id">Supplier</label>
                         <select class="form-control" id="pusat_id" name="pusat_id">
-                             <option>1</option>
-                             <option>2</option>
+                            @foreach ($induks as $index => $item)
+                                <option value="{{ $index }}">{{ $item }}</option>
+                            @endforeach
                         </select>
-                </div>
-                <div class="form-group">
+                </div> --}}
+{{--                 <div class="form-group">
                     <label for="periode">Periode (bulan)</label>
                         <select class="form-control" id="periode" name="periode">
                             <option>1</option>
@@ -38,7 +39,7 @@
                             <option>6</option>
                             <option>12</option>
                         </select>
-                </div>  
+                </div>   --}}
 
                 <div class="row"> 
                     <div class="form-group">
@@ -52,33 +53,36 @@
     </div>
 
     <div class="col-md-8 col">
-        @if (!empty($method))
+        {{-- @if (!empty($method))
             <h1>{{ $method }}</h1>
-        @endif
+        @endif --}}
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th> No </th>
                     <th> Bulan </th>
-                    <th> Permintaan (hasil ramal) </th>
-                    <th></th>
+                    @foreach ($induks as $induk)
+                        <th>{{ $induk }}</th>
+                    @endforeach
+                    <th class="text-primary"><strong>Jumlah</strong></th>
                 </tr>
             </thead>
             <tbody>
             
                 @if ($forecasts != null)
-                    @foreach ($forecasts as $forecast)
+                    @foreach ($monthly as $datas)
                         <tr>
-                            <td>{{ $loop->index+1 }}</td>
                             <td>{{ $lastMonth->addMonths(1)->format('F Y')}}</td>
-                            <td>{{ $forecast }}</td>
+                            @foreach ($datas as $data)
+                                <td>{{ round($data) }}</td>
+                            @endforeach
+                            <td class="text-primary">{{ round(array_sum($datas)) }}</td>
                         </tr>
                     @endforeach
                 @endif
 
-        @if (!empty($kebutuhan))
+{{--         @if (!empty($kebutuhan))
             <h1>{{ $kebutuhan }}</h1>
-        @endif
+        @endif --}}
 
             </tbody>
         </table>

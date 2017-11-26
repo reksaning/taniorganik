@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\komoditas;
+use App\Komoditas;
 use App\Transaksi;
 use App\Produksi;
 class DashboardController extends Controller
@@ -17,7 +17,7 @@ class DashboardController extends Controller
     public function index()
     {
 
-        $komoditases=Komoditas::all();
+        $komoditases = Komoditas::all();
 
 
 

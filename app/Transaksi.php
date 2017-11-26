@@ -34,7 +34,6 @@ class Transaksi extends Model
 	}
 
 	public static function dekomposisi()
-
 	{
 		// nilai x = jumlah bulan
 		$x = Transaksi::where('komoditas_id', request('komoditas_id'))->get()->where('pusat_id', request('pusat_id'))->pluck('bulan')->unique()->count();
@@ -54,6 +53,7 @@ class Transaksi extends Model
 		// nilai perbulan dikali
 		$n = 1;
 		$val['xy'] = 0;
+		
 		foreach (Transaksi::getMonth() as $bulan) {
 			
 			$val['sumy'][$n] = Transaksi::where('tanggal', 'like', "%$bulan%")->where('komoditas_id', request('komoditas_id'))->get()->where('pusat_id', request('pusat_id'))->sum('jumlah');
