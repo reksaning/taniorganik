@@ -75,44 +75,27 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		dockInsidePlotArea: true,
 		itemclick: toogleDataSeries
 	},
-	data: [{
-		type: "line",
-		showInLegend: true,
-		name: "Permintaan",
-		markerType: "square",
-		xValueFormatString: "",
-		color: "#F08080",
-		dataPoints: [
+	data: [
+	@isset ($data)
+		@foreach ($data as $key => $items)
+				{
+					type: "line",
+					showInLegend: true,
+					name: "{{ $key }}",
+					markerType: "square",
+					xValueFormatString: "",
+					color: "{{ $colors[$loop->index] }}",
+					dataPoints: [
+			            @foreach ($items as $key => $element)
+				
+							{ label:  "{{ $key }}"  , y: {{ $element }}},
 
-		@if ($dataGrafiks != null)
-            @foreach ($dataGrafiks as $dataGrafik)
-	
-				{ x:  {{ $loop->index+1 }}  , y: {{ $dataGrafik }}},
-
-            @endforeach
-        @endif
-
-			
-		]
-	},
-	// {
-	// 	type: "line",
-	// 	showInLegend: true,
-	// 	name: "Produksi",
-	// 	lineDashType: "dash",
-	// 	color: "#80f0f0",
-	// 	dataPoints: [
-
-	// 	@if ($dataGrafiks != null)
- //            @foreach ($dataGrafiksProd as $dataGrafiksProd)
-	
-	// 			{ x:  {{ $loop->index+1 }}  , y: {{ $dataGrafiksProd }}},
-
- //            @endforeach
- //        @endif
-			
-	// 	]
-	// }
+			            @endforeach	
+					]
+			},
+		@endforeach
+	@endisset
+		
 	]
 });
 chart.render();
