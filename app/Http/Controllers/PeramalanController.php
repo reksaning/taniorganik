@@ -13,38 +13,65 @@ class PeramalanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    public function test(Request $request)
+    {
+        $request->merge(['test' => 'kamu']);
+
+        return request('test');
+    }
+
+
+    public function index(Request $request)
     {
         $transaksi=Transaksi::all();
         $komoditases=Komoditas::all();
-        $boms=Bom::find(request('pusat_id'));
+        $induks = collect([ 1 => 'Sup1', 2 => 'Sup2', 3 => 'Sup3']);
+
         if (request()->has('komoditas_id')) {
-            $mrp = [
-                \App\Transaksi::dekomposisi(),
-                \App\Transaksi::movingAverage(),
-                \App\Transaksi::SES(),
-                \App\Transaksi::DES(),
 
-            ];
 
-            $collection = collect($mrp);
+            foreach ($induks as $key => $item) {
 
-            $val = $collection->sortBy('error')->first();
+                $request->merge(['pusat_id' => $key]);
 
-            $forecasts = $val['H'];
-            $kebutuhan = array_sum($forecasts);
-            $method = $val['method'];
-            // $forecasts = Transaksi::dekomposisi()['H'];
+                $boms[$key]=Bom::where('commodity_id', request('komoditas_id'))->where('central_id', request('pusat_id'))->first()->quantity;
+
+                $mrp = [
+
+                    \App\Transaksi::dekomposisi(),
+                    \App\Transaksi::movingAverage(),
+                    \App\Transaksi::SES(),
+                    \App\Transaksi::DES(),
+
+                ];
+
+                $collection = collect($mrp);
+
+                $val = $collection->sortBy('error')->first();
+
+                $forecasts[$key] = collect($val['H'])->values()->take(3);
+                $kebutuhan[$key] = $forecasts[$key]->sum();
+                $method[$key] = $val['method'];
+                // $forecasts = Transaksi::dekomposisi()['H'];
+
+            }
+
+            for ($i = 0; $i < 3; $i++) { 
+                foreach ($induks as $key => $value) {
+                    $monthly[$i][$key] = $forecasts[$key][$i] * $boms[$key];
+                }
+            }
+
             $lastMonth = Transaksi::where('komoditas_id', request('komoditas_id'))->orderBy('tanggal', 'desc')->first()->tanggal;
         } else {
             $forecasts = null ;
             $lastMonth = null ;
 
         }
-
-
-        // return $forecasts;
-        return view('ramal.index',compact('transaksi','komoditases', 'forecasts','lastMonth', 'method', 'kebutuhan'));
+        
+        // return [$forecasts,$monthly];
+        return view('ramal.index',compact('transaksi','komoditases', 'forecasts','lastMonth', 'method', 'kebutuhan', 'induks', 'monthly'));
     }
 
     /**

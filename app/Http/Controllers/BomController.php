@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Bom;
 use App\Commodity;
-use App\Supplier;
+use App\Central;
 use App\Packaging;
 
 use Illuminate\Http\Request;
@@ -30,7 +30,7 @@ class BomController extends Controller
     public function create()
     {
     	$commodities = Commodity::all();
-    	$suppliers = Supplier::all();
+    	$suppliers = Central::all();
         $packagings = Packaging::all();
 
         return view('boms.create', compact('commodities','suppliers','packagings'));  
@@ -47,13 +47,13 @@ class BomController extends Controller
         $this->validate(request(), [
                 
                 'commodity_id'        =>  'required',
-                'supplier_id'   =>  'required',
+                'central_id'   =>  'required',
                 'packaging_id'       =>  'required',
                 'quantity'       =>  'required',
                 
                 ]);
 
-            Bom::create(request(['packaging_id','commodity_id','supplier_id','quantity']));
+            Bom::create(request(['packaging_id','commodity_id','central_id','quantity']));
             return redirect('/bom');    }
 
     /**
@@ -95,7 +95,7 @@ class BomController extends Controller
         $this->validate($request, [
 
             'commodity_id'        =>  'required',
-            'supplier_id'   =>  'required',
+            'central_id'   =>  'required',
             'packaging_id'       =>  'required',
             'quantity'       =>  'required',
 
@@ -103,7 +103,7 @@ class BomController extends Controller
 
         $bom->update([
             'commodity_id' => $request->commodity_id,
-            'supplier_id' => $request->supplier_id,
+            'central_id' => $request->supplier_id,
             'packaging_id' => $request->packaging_id,
             'quantity' => $request->quantity,
             

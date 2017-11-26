@@ -2,8 +2,8 @@
 -- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: 26 Nov 2017 pada 09.00
+-- Host: localhost
+-- Generation Time: 26 Nov 2017 pada 11.59
 -- Versi Server: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -54,9 +54,9 @@ INSERT INTO `bahans` (`id`, `nama`, `harga`, `created_at`, `updated_at`) VALUES
 CREATE TABLE `boms` (
   `id` int(10) UNSIGNED NOT NULL,
   `commodity_id` int(11) NOT NULL,
-  `supplier_id` int(11) NOT NULL,
+  `central_id` int(11) UNSIGNED DEFAULT NULL,
   `packaging_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
+  `quantity` double(4,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -65,10 +65,32 @@ CREATE TABLE `boms` (
 -- Dumping data untuk tabel `boms`
 --
 
-INSERT INTO `boms` (`id`, `commodity_id`, `supplier_id`, `packaging_id`, `quantity`, `created_at`, `updated_at`) VALUES
-(2, 1, 1, 2, 1, '2017-11-16 23:43:35', '2017-11-16 23:43:35'),
-(3, 1, 10, 2, 2, '2017-11-16 23:43:58', '2017-11-16 23:43:58'),
-(4, 2, 1, 2, 1, '2017-11-16 23:44:08', '2017-11-16 23:44:08');
+INSERT INTO `boms` (`id`, `commodity_id`, `central_id`, `packaging_id`, `quantity`, `created_at`, `updated_at`) VALUES
+(2, 1, 1, 2, 1.00, '2017-11-16 23:43:35', '2017-11-16 23:43:35'),
+(3, 1, 2, 2, 0.50, '2017-11-16 23:43:58', '2017-11-16 23:43:58'),
+(8, 1, 3, 1, 0.60, '2017-11-26 03:25:30', '2017-11-26 03:25:30');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `centrals`
+--
+
+CREATE TABLE `centrals` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `centrals`
+--
+
+INSERT INTO `centrals` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'superindo', NULL, NULL),
+(2, 'indogrosir', NULL, NULL),
+(3, 'alfa', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -248,7 +270,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (19, '2017_11_12_151942_create_commodities_table', 5),
 (20, '2017_11_16_142209_create_packagings_table', 6),
 (21, '2017_11_16_142822_create_stocks_table', 6),
-(22, '2017_11_16_143511_create_boms_table', 6);
+(22, '2017_11_16_143511_create_boms_table', 6),
+(23, '2017_11_26_101555_create_centrals_table', 7);
 
 -- --------------------------------------------------------
 
@@ -269,6 +292,7 @@ CREATE TABLE `packagings` (
 --
 
 INSERT INTO `packagings` (`id`, `name`, `time`, `created_at`, `updated_at`) VALUES
+(1, 'isolasi', NULL, NULL, NULL),
 (2, 'plastik', 7, '2017-11-16 08:59:08', '2017-11-16 08:59:08');
 
 -- --------------------------------------------------------
@@ -536,6 +560,12 @@ ALTER TABLE `boms`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `centrals`
+--
+ALTER TABLE `centrals`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `commodities`
 --
 ALTER TABLE `commodities`
@@ -633,7 +663,12 @@ ALTER TABLE `bahans`
 -- AUTO_INCREMENT for table `boms`
 --
 ALTER TABLE `boms`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `centrals`
+--
+ALTER TABLE `centrals`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `commodities`
 --
@@ -658,7 +693,7 @@ ALTER TABLE `lahans`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `packagings`
 --

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBomsTable extends Migration
+class CreateCentralsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateBomsTable extends Migration
      */
     public function up()
     {
-        Schema::create('boms', function (Blueprint $table) {
+        Schema::create('centrals', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('commodity_id');
-            $table->integer('supplier_id');
-            $table->integer('packaging_id');
-            $table->double('quantity', 4,2);
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateBomsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('boms');
+        Schema::dropIfExists('centrals');
     }
 }

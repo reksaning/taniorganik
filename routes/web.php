@@ -13,7 +13,7 @@
 
 //halaman utama
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/dashboard');
 });
 
 //Dashboard
@@ -97,6 +97,7 @@ Route::delete('/supplier/{supplier}','SupplierController@destroy');
 Route::get('/peramalan', 'PeramalanController@index')->name('peramalan');
 Route::post('/peramalan','PeramalanController@index');
 Route::get('/MRP', 'MRPController@index')->name('supplier');
+Route::get('/peramalan/test', 'PeramalanController@test');
 
 Route::get('/test', function()
 {

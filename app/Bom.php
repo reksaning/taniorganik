@@ -7,15 +7,19 @@ class Bom extends Model
 {
 
 	public function commodity(){
-	return $this->belongsTo('\App\Commodity');
+		return $this->belongsTo('\App\Commodity');
 	}
 
 	public function supplier(){
-	return $this->belongsTo('\App\Supplier');
+		return $this->belongsTo('\App\Supplier');
 	}
 
 	public function packaging(){
-	return $this->belongsTo('\App\Packaging');
+		return $this->belongsTo('\App\Packaging');
+	}
+
+	public function central(){
+		return $this->belongsTo('App\Central');
 	}
     
 }

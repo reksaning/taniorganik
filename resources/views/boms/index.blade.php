@@ -23,7 +23,7 @@
           <tr>
             <th> {{$nomor}}</th>
               <td> {{$bom->commodity->name}}</td>
-              <td> {{$bom->supplier->name}}</td>
+              <td> {{$bom->central->name}}</td>
               <td> {{$bom->quantity}} </td>
               <td> {{$bom->packaging->name}} </td>
               <td><a href="bom/edit/{{ $bom->id }}" class="btn btn-info btn-sm" role="button ">edit</a>
