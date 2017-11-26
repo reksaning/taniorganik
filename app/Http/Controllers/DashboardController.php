@@ -19,11 +19,23 @@ class DashboardController extends Controller
 
         $komoditases = Komoditas::all();
 
+        $pusats = \App\Central::all();
+
 
 
         if (request()->has('komoditas_id')) {
-            $dataGrafiks=Transaksi::where('komoditas_id', request('komoditas_id'))->pluck('jumlah');
-            $dataGrafiksProd=Produksi::where('komoditas_id', request('komoditas_id'))->pluck('jumlah');
+            $year = request('year');
+            $months = Transaksi::where('tanggal', 'like', "%$year%")->orderBy('tanggal', 'desc')->get()->sortBy('bulan')->pluck('bulan')->unique()->values();
+
+            $transaksis = Transaksi::where('tanggal', 'like', "%$year%")->orderBy('tanggal', 'desc')->get();
+
+            foreach ($pusats as $pusat) {
+                foreach ($months as $month) {
+                    $data[$pusat->name][$month] = $transaksis->where('pusat_id', $pusat->id)->where('bulan', $month)->sum('jumlah');
+                }
+            }
+            // $dataGrafiks=Transaksi::where('komoditas_id', request('komoditas_id'))->pluck('jumlah');
+            // $dataGrafiksProd=Produksi::where('komoditas_id', request('komoditas_id'))->pluck('jumlah');
         } 
 
         else {
@@ -32,7 +44,9 @@ class DashboardController extends Controller
             $komoditases1 = null ;
         }
 
-        return view('dashboards.home', compact('komoditases','dataGrafiks','dataGrafiksProd'));    
+        $colors = collect(['red', 'blue', 'green']);
+
+        return view('dashboards.home', compact('komoditases', 'data', 'colors'));    
     }
 
     /**
