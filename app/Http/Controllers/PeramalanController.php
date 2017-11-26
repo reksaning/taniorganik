@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Komoditas;
 use App\Transaksi;
+use App\Bom;
 use Illuminate\Http\Request;
 
 class PeramalanController extends Controller
@@ -16,9 +17,24 @@ class PeramalanController extends Controller
     {
         $transaksi=Transaksi::all();
         $komoditases=Komoditas::all();
-
+        $boms=Bom::find(request('pusat_id'));
         if (request()->has('komoditas_id')) {
-            $forecasts = Transaksi::dekomposisi()['H'];
+            $mrp = [
+                \App\Transaksi::dekomposisi(),
+                \App\Transaksi::movingAverage(),
+                \App\Transaksi::SES(),
+                \App\Transaksi::DES(),
+
+            ];
+
+            $collection = collect($mrp);
+
+            $val = $collection->sortBy('error')->first();
+
+            $forecasts = $val['H'];
+            $kebutuhan = array_sum($forecasts);
+            $method = $val['method'];
+            // $forecasts = Transaksi::dekomposisi()['H'];
             $lastMonth = Transaksi::where('komoditas_id', request('komoditas_id'))->orderBy('tanggal', 'desc')->first()->tanggal;
         } else {
             $forecasts = null ;
@@ -28,7 +44,7 @@ class PeramalanController extends Controller
 
 
         // return $forecasts;
-        return view('ramal.index',compact('transaksi','komoditases', 'forecasts','lastMonth'));
+        return view('ramal.index',compact('transaksi','komoditases', 'forecasts','lastMonth', 'method', 'kebutuhan'));
     }
 
     /**

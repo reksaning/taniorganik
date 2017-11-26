@@ -24,7 +24,6 @@ class DashboardController extends Controller
         if (request()->has('komoditas_id')) {
             $dataGrafiks=Transaksi::where('komoditas_id', request('komoditas_id'))->pluck('jumlah');
             $dataGrafiksProd=Produksi::where('komoditas_id', request('komoditas_id'))->pluck('jumlah');
-            $bulanSales=Transaksi::where('komoditas_id', request('komoditas_id'))->pluck('komoditas_id')->first();
         } 
 
         else {
@@ -33,7 +32,7 @@ class DashboardController extends Controller
             $komoditases1 = null ;
         }
 
-        return view('dashboards.home', compact('komoditases','dataGrafiks','dataGrafiksProd','bulanSales'));    
+        return view('dashboards.home', compact('komoditases','dataGrafiks','dataGrafiksProd'));    
     }
 
     /**

@@ -30,16 +30,17 @@ class Transaksi extends Model
 
 	public static function getMonth($month = 36)
 	{
-		return static::where('komoditas_id', request('komoditas_id'))->orderBy('tanggal', 'desc')->get()->take($month)->sortBy('bulan')->pluck('bulan')->unique()->values();
+		return static::where('komoditas_id', request('komoditas_id'))->orderBy('tanggal', 'desc')->get()->where('pusat_id', request('pusat_id'))->take($month)->sortBy('bulan')->pluck('bulan')->unique()->values();
 	}
 
 	public static function dekomposisi()
 
 	{
 		// nilai x = jumlah bulan
-		$x = Transaksi::where('komoditas_id', request('komoditas_id'))->get()->pluck('bulan')->unique()->count();
+		$x = Transaksi::where('komoditas_id', request('komoditas_id'))->get()->where('pusat_id', request('pusat_id'))->pluck('bulan')->unique()->count();
 		$val['x'] = 0;
 		$val['x2'] = 0;
+
 
 		//nilai variabel x1+x2+x3 & x1kuadrat
 		for ($i=1; $i < $x+1; $i++) { 
@@ -87,6 +88,8 @@ class Transaksi extends Model
 				$error[$i] = $H[$i] - $sumy[$i];
 		}
 
+		$val['error'] = array_sum($error);
+
 
 		if (request()->has('periode')) {
 			$periode=request('periode');
@@ -99,7 +102,7 @@ class Transaksi extends Model
 		}
 	
 		// return array_values($val['H']);
-		
+		$val['method'] = 'dekomposisi';
 		return $val;
 
 
@@ -111,11 +114,15 @@ class Transaksi extends Model
 		// $ramal= $val[a]+$val['b']*X
 	}
 
-	public static function dekom()
-	{
-		$val = Transaksi::dekomposisi();
+	// public static function dekom()
+	// {
+	// 	$val = Transaksi::dekomposisi();
+	// 	$res['H'] = $val['H'];
+	// 	$res['error'] = $val['error'];
 
-	}
+	// 	return $res;
+
+	// }
 
 
 	public static function movingAverage()
@@ -130,7 +137,11 @@ class Transaksi extends Model
 			$n++;
 		}
 
-		return $MA;
+		$val['H'] = $MA;
+		$val['error'] = array_sum($error);
+
+		$val['method'] = 'movingAverage';
+		return $val;
 		
 	}
 
@@ -167,9 +178,13 @@ class Transaksi extends Model
 		}
 
 		// return $SESS;
-		$key = array_keys($sumerror, min($sumerror));
+		$key = array_values(array_keys($sumerror, min($sumerror)));
 
-		return $key;
+		$res['H'] = $SES[$key['0']];
+		$res['error'] = $sumerror[$key['0']];
+
+		$res['method'] = 'SES';
+		return $res;
 
 	}
 
@@ -208,15 +223,22 @@ class Transaksi extends Model
 
 
 				}
-				$sumerror[$m] = array_sum($error[$m]);
+
+				$res ["$n$m"] = [
+					'error' => array_sum($error[$m]),
+					'H' => $SES[$m],
+				];
+				$sumerror['ke-'.$m] = array_sum($error[$m]);
 
 				$m++;
 
 			}
 
-			$SESS[$n] = $SES;
-			$errors[$n] = $error;
-			$sumerrors[$n] = $sumerror;
+			// $SESS['ke-'.$n] = $SES;
+			// $errors[$n] = $error;
+			// $sumerrors[$n] = $sumerror;
+
+			// $val[$n] = $res;
 
 			$n++;
 
@@ -224,10 +246,25 @@ class Transaksi extends Model
 			// return $sumy;
 		}
 
-		// return $SESS;
-		$key = array_keys($sumerrors, min($sumerrors));
+		$collection = collect($res);
 
-		return $key;
+		$val = $collection->sortBy('error')->first();
+
+		// return $val;
+
+		// $collection = collect($res);
+
+		// $sorted = $collection->sortBy(function($e, $k)
+		// {
+		// 	return min($e['error']);
+		// });
+		$val['method'] = 'DES';
+		return $val;
+
+
+
+		// return $SESS;
+		// $key = array_keys($sumerrors, min($sumerrors));
 
 	}
 
@@ -251,7 +288,7 @@ class Transaksi extends Model
 	
 
 	protected $dates = ['tanggal'];
-	protected $appends = ['bulan'];
+	protected $appends = ['bulan', 'pusat_id'];
 }
 
  

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="panel panel-default">
-    <div class="panel-body"><h2>Rekap Produksi dan Penjualan</h2></div>
+    <div class="panel-body"><h2>Rekap Penjualan</h2></div>
 </div>
 
 {{-- Input (pemilihan komoditas) --}}
@@ -49,7 +49,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	animationEnabled: true,
 	theme: "light2",
 	title:{
-		text: "Permintaan & Produksi"
+		text: "Permintaan"
 	},
 	axisX:{
 		title: "Periode Bulan",
@@ -95,24 +95,24 @@ var chart = new CanvasJS.Chart("chartContainer", {
 			
 		]
 	},
-	{
-		type: "line",
-		showInLegend: true,
-		name: "Produksi",
-		lineDashType: "dash",
-		color: "#80f0f0",
-		dataPoints: [
+	// {
+	// 	type: "line",
+	// 	showInLegend: true,
+	// 	name: "Produksi",
+	// 	lineDashType: "dash",
+	// 	color: "#80f0f0",
+	// 	dataPoints: [
 
-		@if ($dataGrafiks != null)
-            @foreach ($dataGrafiksProd as $dataGrafiksProd)
+	// 	@if ($dataGrafiks != null)
+ //            @foreach ($dataGrafiksProd as $dataGrafiksProd)
 	
-				{ x:  {{ $loop->index+1 }}  , y: {{ $dataGrafiksProd }}},
+	// 			{ x:  {{ $loop->index+1 }}  , y: {{ $dataGrafiksProd }}},
 
-            @endforeach
-        @endif
+ //            @endforeach
+ //        @endif
 			
-		]
-	}
+	// 	]
+	// }
 	]
 });
 chart.render();

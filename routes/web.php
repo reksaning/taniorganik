@@ -117,6 +117,31 @@ Route::get('/SES', function()
 	return \App\Transaksi::SES();
 });
 
+Route::get('/DES', function()
+{
+	// $transaksis = \App\Transaksi::dekomposisi();
+	return \App\Transaksi::DES();
+});
+
+Route::get('/mrp', function()
+{
+
+	$mrp = [
+		\App\Transaksi::dekomposisi(),
+		\App\Transaksi::movingAverage(),
+		\App\Transaksi::SES(),
+		\App\Transaksi::DES(),
+
+	];
+
+	$collection = collect($mrp);
+
+	$val = $collection->sortBy('error')->first();
+	return $val;
+
+	
+});
+
 
 
 Route::get('/test2', function()
@@ -126,3 +151,5 @@ Route::get('/test2', function()
 
 	return $transaksis;
 });
+
+

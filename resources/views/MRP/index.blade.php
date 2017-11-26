@@ -20,6 +20,13 @@
                             @endforeach
                         </select>
                 </div>
+                <div class="form-group">
+                    <label for="pusat_id">Supplier</label>
+                        <select class="form-control" id="pusat_id" name="pusat_id">
+                             <option>1</option>
+                             <option>2</option>
+                        </select>
+                </div>
 
                 <div class="form-group">
                     <label for="periode">Periode (bulan)</label>

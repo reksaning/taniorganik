@@ -20,7 +20,13 @@
                             @endforeach
                         </select>
                 </div>
-
+                <div class="form-group">
+                    <label for="pusat_id">Supplier</label>
+                        <select class="form-control" id="pusat_id" name="pusat_id">
+                             <option>1</option>
+                             <option>2</option>
+                        </select>
+                </div>
                 <div class="form-group">
                     <label for="periode">Periode (bulan)</label>
                         <select class="form-control" id="periode" name="periode">
@@ -46,6 +52,9 @@
     </div>
 
     <div class="col-md-8 col">
+        @if (!empty($method))
+            <h1>{{ $method }}</h1>
+        @endif
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -66,6 +75,11 @@
                         </tr>
                     @endforeach
                 @endif
+
+        @if (!empty($kebutuhan))
+            <h1>{{ $kebutuhan }}</h1>
+        @endif
+
             </tbody>
         </table>
     </div>
