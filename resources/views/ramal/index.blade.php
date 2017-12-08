@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="panel panel-default">
-    <div class="panel-body"><h2>Peramalan Permintaan Pasar</h2></div>
+    <div class="panel-body"><h2>Material Requirement Planning</h2></div>
 </div>
 
 <div class="row">
@@ -13,7 +13,7 @@
 
             <form method="GET" action="/peramalan">
                 <div class="form-group">
-                    <label for="komoditas_id">Nama Sayuran</label>
+                    <label for="komoditas_id">Pilih Komoditas</label>
                         <select class="form-control" id="komoditas_id" name="komoditas_id">
                             @foreach ($komoditases as $komoditas)
                                 <option value="{{$komoditas->id}}">{{$komoditas->nama}}</option>
@@ -41,11 +41,11 @@
                         </select>
                 </div>   --}}
 
-                <div class="row"> 
-                    <div class="form-group">
-                        <button type="submit" class="btn btn btn-md">Proses</button>
-                    </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn btn-md">Proses</button>
                 </div>
+
                 
             </form>
         </div>
@@ -56,30 +56,47 @@
         {{-- @if (!empty($method))
             <h1>{{ $method }}</h1>
         @endif --}}
+        <h2>Tabel Hasil Peramalan</h2>
         <table class="table table-hover">
             <thead>
-                <tr>
+                <tr class="success">
                     <th> Bulan </th>
                     @foreach ($induks as $induk)
-                        <th>{{ $induk }}</th>
+                        <th>{{ $induk }} (pack)</th>
                     @endforeach
-                    <th class="text-primary"><strong>Jumlah</strong></th>
+                    <th class="text-primary"><strong>Jumlah (pack)</strong></th>
                 </tr>
             </thead>
             <tbody>
             
+
                 @if ($forecasts != null)
                     @foreach ($monthly as $datas)
                         <tr>
-                            <td>{{ $lastMonth->addMonths(1)->format('F Y')}}</td>
+                            <td class="warning">{{ $lastMonth->addMonths(1)->format('F Y')}}</td>
                             @foreach ($datas as $data)
                                 <td>{{ round($data) }}</td>
+
                             @endforeach
                             <td class="text-primary">{{ round(array_sum($datas)) }}</td>
                         </tr>
                     @endforeach
                 @endif
-
+                @if ($forecasts != null)
+                        <tr class="info">
+                            <td>Metode Terpilih </td>
+                            @foreach ($method as $metas)
+                                <td>{{$metas}}</td>
+                            @endforeach
+                        </tr>
+                        <tr class="danger">
+                            <td>Error</td>
+                            @foreach ($selisih as $error)
+                                <td>{{round(($error),2)}}</td>
+                            @endforeach
+                        </tr>
+                @endif
+                
 {{--         @if (!empty($kebutuhan))
             <h1>{{ $kebutuhan }}</h1>
         @endif --}}
@@ -87,7 +104,75 @@
             </tbody>
         </table>
     </div>
-  </div>
+</div>
+
+<div class = "row">
+    <div class="col-md-12 col">
+        <div class="row">
+            <div class="col-md-6 col">
+                @if (!empty($nama))
+                <h2>Kebutuhan {{$nama}} </h2>
+                @endif 
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="success">
+                            <th> Kebutuhan Bulan </th>
+                            <th> Jumlah (kg) </th>
+                            <th class="text-primary">
+                                <strong> Harian (kg) </strong>
+                            </th>
+                            <th> Mulai Dipesan Tanggal </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($forecasts != null)
+                            @foreach ($monthlyKg as $datas)
+                                <tr>
+                                    <td class="warning">{{ $lastMonthNeed->addMonths(1)->startOfMonth()->format('F Y')}}</td>
+                                    <td>{{ round(array_sum($datas)) }}</td>
+                                    <td class="text-primary">{{ round((array_sum($datas)/30),2) }}</td>
+                                    <td class="danger">{{ $lastMonthOrder->addMonths(1)->format('d F Y')}}</td>
+                                </tr>
+                            @endforeach
+                        @endif
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6 col">
+            <h2>Bahan Kemas </h2>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="success">
+                                    @if (!empty($packagings))
+                                        @foreach ($packagings as $packaging)
+                                            <th>{{ $packaging->name }}</th>
+                                        @endforeach
+                                    @endif
+                                <th> Dipesan Tanggal </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if ($forecasts != null)
+                                @foreach ($monthly as $datas)
+                                    <tr>
+                                    @foreach ($datas as $data)
+                                        <td>{{ round($data) }} (pcs) </td>
+                                    @endforeach
+                                        <td class="danger">{{ $lastMonthOrderKemasan->addMonths(1)->format('d F Y')}}</td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+   
+
+
   <script type="text/javascript">
       $("#periode").val("{{ request('periode') }}");
       $("#komoditas_id").val("{{ request('komoditas_id') }}");

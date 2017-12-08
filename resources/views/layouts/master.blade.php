@@ -1,74 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <title>Tani Organik Merapi</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-{{-- bootstrap --}}
-  <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-{{-- datepicker --}}
-  <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
- {{--  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css"> --}}
-  <script src="/js/jquery.min.js"></script>
+    <title>Tani Organik Merapi</title>
 
-{{-- font --}}
-  <link rel="stylesheet" href="/css/font-awesome.min.css">
+    {{-- bootstrap --}}
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/custom.css">
+
+    {{-- datepicker --}}
+    <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+    {{--  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css"> --}}
+    <script src="/js/jquery.min.js"></script>
+
+    {{-- font --}}
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
 </head>
 
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12 col">
-            @include('layouts.nav')
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12 col">
-            <div class="row">
+    <div id="wrapper">
 
-                <div class="col-md-3 col">
-                    <div class="container-fluid text-left">    
-                        <div class="row content">
-                            @include('layouts.sidebar')
-                        </div>
-                    </div>
-                </div>
+        <!-- Navigation -->
+        @include('layouts.nav')
 
-                <div class="col-md-9"> 
-                    @yield('content')
-                </div>
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                @yield('content')   
 
             </div>
         </div>
+        
     </div>
-</div>
+<!-- /#footer -->
 
-{{-- datepicker --}}
-  <script src="/js/bootstrap-datepicker.js"></script>
-{{-- bootstrap --}}
-  <script src="/js/jquery.min.js"></script>
-  <script src="/js/bootstrap.min.js"></script>
+    <!-- jQuery -->
+    <script src="/js/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/js/bootstrap.min.js"></script>
+
 </body>
-
 <div class="row">
     <footer class="text-center">
         @include('layouts.footer')
     </footer>
 </div>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-

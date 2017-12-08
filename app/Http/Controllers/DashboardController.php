@@ -27,7 +27,7 @@ class DashboardController extends Controller
             $year = request('year');
             $months = Transaksi::where('tanggal', 'like', "%$year%")->orderBy('tanggal', 'desc')->get()->sortBy('bulan')->pluck('bulan')->unique()->values();
 
-            $transaksis = Transaksi::where('tanggal', 'like', "%$year%")->orderBy('tanggal', 'desc')->get();
+            $transaksis = Transaksi::where('tanggal', 'like', "%$year%")->where('komoditas_id', request('komoditas_id'))->orderBy('tanggal', 'desc')->get();
 
             foreach ($pusats as $pusat) {
                 foreach ($months as $month) {
@@ -44,7 +44,7 @@ class DashboardController extends Controller
             $komoditases1 = null ;
         }
 
-        $colors = collect(['red', 'blue', 'green']);
+        $colors = collect(['red', 'blue', 'green', 'yellow']);
 
         return view('dashboards.home', compact('komoditases', 'data', 'colors'));    
     }
@@ -54,9 +54,9 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function cusmon()
     {
-        //
+        return view('dashboards.cusmon');
     }
 
     /**

@@ -1,25 +1,39 @@
-
-<nav class="navbar navbar-default" role="navigation">
-	<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-		<div class="menu_section">
-        	<ul class="nav side-menu">
-			<li><a href="/dashboard"><i class="fa fa-home fa-fw"></i>Home</a></li>
-			<li><a href="/commodity"><i class="fa fa-list-alt fa-fw"></i>Komoditas</a></li>
-			<li><a href="/demand?date={{ date('Y-m-d') }}"><i class="fa fa-gear fa-fw"></i>Permintaan</a></li>
-			<li><a href="/MRP"><i class="fa fa-group fa-fw"></i>Material Req. Plan</a></li>
-			<li><a href="/peramalan"><i class="fa fa-gear fa-fw"></i>Peramalan Pasar</a></li>
-			<li><a href="/supplier"><i class="fa fa-truck fa-fw"></i>Supplier</a></li>
-			<li><a href="/bom"><i class="fa fa-th fa-fw"></i>Bill Of Material</a></li>
-			<li><a href="/packaging"><i class="fa fa-dropbox fa-fw"></i>Bahan Kemas</a></li>
-			<li><a href="/stock"><i class="fa fa-gift fa-fw"></i>Update Bahan Kemas</a></l>
-			
-
-
-			{{-- <li><a href="/transaksi"><i class="fa fa-truck fa-fw"></i>Transaksi</a></li>
-			<li><a href="/petani"><i class="fa fa-group fa-fw"></i>Data Petani</a></li> --}}
-			
-			</ul>
-		</div>
-	</div>
-</nav>
-
+<div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class="nav navbar-nav side-nav">
+        <li class="active">
+            <a href="/dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+        </li>
+        <li>
+            <a href="/commodity"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
+        </li>
+        <li>
+				<a href="/demand?date={{ date('Y-m-d') }}"><i class="fa fa-fw fa-table"></i> Tables</a>
+        </li>
+        <li>
+            <a href="/MRP"><i class="fa fa-fw fa-edit"></i> Forms</a>
+        </li>
+        <li>
+            <a href="/supplier"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
+        </li>
+        <li>
+            <li><a href="/packaging"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
+        </li>
+        <li>
+            <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
+            <ul id="demo" class="collapse">
+                <li>
+                    <a href="#">Dropdown Item</a>
+                </li>
+                <li>
+                    <a href="#">Dropdown Item</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
+        </li>
+        <li>
+            <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>
+        </li>
+    </ul>
+</div>

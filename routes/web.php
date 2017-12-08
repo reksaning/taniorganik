@@ -19,7 +19,6 @@ Route::get('/', function () {
 //Dashboard
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
-
 //iki commodity
 Route::get('/commodity', 'CommodityController@index')->name('commodity');
 Route::get('/commodity/create', 'CommodityController@create');
@@ -49,7 +48,7 @@ Route::get('/bom', 'BomController@index')->name('bom');
 Route::get('/bom/create', 'BomController@create');
 Route::post('/bom','BomController@store');
 Route::get('/bom/edit/{bom}','BomController@edit');
-Route::put('/bom','BomController@update');
+Route::put('/bom/{bom}','BomController@update');
 Route::delete('/bom/{bom}','BomController@destroy');
 
 // packaging baku

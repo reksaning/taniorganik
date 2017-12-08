@@ -10,7 +10,7 @@
           <tr>
             <th> No </th>
             <th> Komoditas </th>
-            <th> Supplier </th>
+            <th> Outlet </th>
             <th> Konversi </th>
             <th> Bahan Kemas </th>
             <th></th>
@@ -26,12 +26,19 @@
               <td> {{$bom->central->name}}</td>
               <td> {{$bom->quantity}} </td>
               <td> {{$bom->packaging->name}} </td>
-              <td><a href="bom/edit/{{ $bom->id }}" class="btn btn-info btn-sm" role="button ">edit</a>
-              <form action="/bom/{{$bom->id}}" method="POST">
-               {{ csrf_field() }}
-               {{ method_field('DELETE') }}
-                <button onclick="return confirm('Anda yakin akan menghapus?')" type="submit" class="btn btn-danger btn-sm">hapus</button>
-              </form>
+              <td>
+
+              <div class="input-group">
+                <span class="input-group-btn">
+                    <a href="bom/edit/{{ $bom->id }}" class="btn btn-info btn-sm" role="button ">edit</a>
+                </span>
+                <form action="/bom/{{$bom->id}}" method="POST">
+                 {{ csrf_field() }}
+                 {{ method_field('DELETE') }}
+                  <button onclick="return confirm('Anda yakin akan menghapus?')" type="submit" class="btn btn-danger btn-sm">hapus</button>
+                </form>
+
+              </div>
               </td>
           </tr>
           @endforeach

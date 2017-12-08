@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-	<h1>Edit Data Supplier</h1>
+	<h1>Edit Data Outlet</h1>
 	<hr>
 
 	<form method="POST" action="/supplier/{{$supplier->id}}">
@@ -10,7 +10,7 @@
 
 	<div class="col-sm-6">
 		<div class="form-group">
-			<label for="title">Nama Supplier</label>
+			<label for="title">Nama Outlet</label>
 			<input value="{{$supplier->name}}" type="text" class="form-control" id="name" name="name">
 		</div>
 

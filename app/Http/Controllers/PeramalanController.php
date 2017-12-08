@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 use App\Komoditas;
 use App\Transaksi;
 use App\Bom;
+use App\Commodity;
+use App\Packaging;
 use Illuminate\Http\Request;
+
 
 class PeramalanController extends Controller
 {
@@ -26,7 +29,9 @@ class PeramalanController extends Controller
     {
         $transaksi=Transaksi::all();
         $komoditases=Komoditas::all();
-        $induks = collect([ 1 => 'Sup1', 2 => 'Sup2', 3 => 'Sup3']);
+        $packagings = Packaging::all();
+
+        $induks = collect([ 1 => 'Superindo', 2 => 'Indogrosir', 3 => 'Giant']);
 
         if (request()->has('komoditas_id')) {
 
@@ -39,7 +44,7 @@ class PeramalanController extends Controller
 
                 $mrp = [
 
-                    \App\Transaksi::dekomposisi(),
+                    // \App\Transaksi::dekomposisi(),
                     \App\Transaksi::movingAverage(),
                     \App\Transaksi::SES(),
                     \App\Transaksi::DES(),
@@ -53,25 +58,43 @@ class PeramalanController extends Controller
                 $forecasts[$key] = collect($val['H'])->values()->take(3);
                 $kebutuhan[$key] = $forecasts[$key]->sum();
                 $method[$key] = $val['method'];
+                $selisih[$key] = $val['error'];
                 // $forecasts = Transaksi::dekomposisi()['H'];
 
             }
 
             for ($i = 0; $i < 3; $i++) { 
                 foreach ($induks as $key => $value) {
-                    $monthly[$i][$key] = $forecasts[$key][$i] * $boms[$key];
+                    $monthlyKg[$i][$key] = $forecasts[$key][$i]* $boms[$key] ;
+                                        // 
                 }
             }
 
+            for ($i = 0; $i < 3; $i++) { 
+                foreach ($induks as $key => $value) {
+                    $monthly[$i][$key] = $forecasts[$key][$i] ;
+                                        // * $boms[$key]
+                }
+            }
+
+            //untuk tabel MRP
+            $nama=Commodity::where('id', request('komoditas_id'))->first()->name;
+            $leadTime = Commodity::where('id', request('komoditas_id'))->first()->time;
+
             $lastMonth = Transaksi::where('komoditas_id', request('komoditas_id'))->orderBy('tanggal', 'desc')->first()->tanggal;
+            $lastMonthNeed = Transaksi::where('komoditas_id', request('komoditas_id'))->orderBy('tanggal', 'desc')->first()->tanggal;
+            $lastMonthOrder = Transaksi::where('komoditas_id', request('komoditas_id'))->orderBy('tanggal', 'desc')->first()->tanggal->startOfMonth()->subDays($leadTime+7);
+            $lastMonthOrderKemasan = Transaksi::where('komoditas_id', request('komoditas_id'))->orderBy('tanggal', 'desc')->first()->tanggal->startOfMonth()->subDays(14);
+
         } else {
+
             $forecasts = null ;
             $lastMonth = null ;
 
         }
         
         // return [$forecasts,$monthly];
-        return view('ramal.index',compact('transaksi','komoditases', 'forecasts','lastMonth', 'method', 'kebutuhan', 'induks', 'monthly'));
+        return view('ramal.index',compact('transaksi','komoditases','packagings', 'forecasts','lastMonth', 'lastMonthNeed', 'leadTime','lastMonthOrder', 'method', 'kebutuhan', 'induks', 'monthly', 'monthlyKg', 'nama', 'lastMonthOrderKemasan','selisih'));
     }
 
     /**

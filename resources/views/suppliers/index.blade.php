@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-<h1>Data Supplier</h1>	
+<h1>Data Uotlet</h1>	
 
 	<div>
 	{{-- <h1>Rata tanam {{ \App\Komoditas::rataLamaTanam() }}</h1> --}}
@@ -9,7 +9,7 @@
 	  <table class="table table-hover">
 	        <tr>
 	        	<th> No </th>
-	            <th> Supplier </th>
+	            <th> Outlet </th>
 	            <th> Inisial </th>
 	            <th> Alamat </th>
 	            <th></th>
@@ -26,13 +26,23 @@
 	            <td> {{$supplier->address}} </td>
 
 	            <td>
-	            <a href="supplier/edit/{{ $supplier->id }}" class="btn btn-info btn-sm" role="button ">edit</a>
+	            <div class="input-group">
 
-	            <form action="/supplier/{{$supplier->id}}" method="POST">
-	             {{ csrf_field() }}
-	             {{ method_field('DELETE') }}
-		            <button onclick="return confirm('Anda yakin akan menghapus?')" type="submit" class="btn btn-danger btn-sm">hapus</button>
-	            </form>
+					    <span class="input-group-btn">
+					        <a href="supplier/edit/{{ $supplier->id }}" class="btn btn-info btn-sm" role="button ">edit</a>
+					    </span>
+
+					    <form action="/supplier/{{$supplier->id}}" method="POST">
+			             {{ csrf_field() }}
+			             {{ method_field('DELETE') }}
+				            <button onclick="return confirm('Anda yakin akan menghapus?')" type="submit" class="btn btn-danger btn-sm">hapus</button>
+			            </form>
+
+				</div>
+				
+	            
+
+	            
 
 
 	            </td>

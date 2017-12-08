@@ -22,12 +22,18 @@
 	        	<th> {{$nomor}}</th>
 	            <td> {{$packaging->name}}</td>
 	            <td> {{$packaging->time}} </td>
-	            <td><a href="packaging/edit/{{ $packaging->id }}" class="btn btn-info btn-sm" role="button ">edit</a>
-	            <form action="/packaging/{{$packaging->id}}" method="POST">
+	            <td>
+
+	            <div class="input-group">
+                <span class="input-group-btn">
+                    <a href="packaging/edit/{{ $packaging->id }}" class="btn btn-info btn-sm" role="button ">edit</a>
+                </span>
+               	<form action="/packaging/{{$packaging->id}}" method="POST">
 	             {{ csrf_field() }}
 	             {{ method_field('DELETE') }}
 		            <button onclick="return confirm('Anda yakin akan menghapus?')" type="submit" class="btn btn-danger btn-sm">hapus</button>
 	            </form>
+              	</div>
 	            </td>
 	        </tr>
 	        @endforeach

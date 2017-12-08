@@ -11,7 +11,7 @@
 		{{csrf_field()}}
 
 	<div class="col-sm-6">
-		<input type="hidden" name="supplier_id" value="{{ request('supplier_id') }}"><label>BAJAN</label>
+		<input type="hidden" name="supplier_id" value="{{ request('supplier_id') }}"><label></label>
 		<input type="hidden" name="tanggal" value="{{ request('tanggal') }}">
 
 	<div>

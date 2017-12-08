@@ -6,14 +6,11 @@ namespace App;
 class Transaksi extends Model
 {
     
-   	public function komoditas()
-
-	{
+   	public function komoditas(){
 		return $this->BelongsTo('\App\Komoditas');
 	}
 
-	public function supplier()
-	{
+	public function supplier(){
 		return $this->BelongsTo('App\Supplier');
 	}
 
@@ -77,7 +74,8 @@ class Transaksi extends Model
 
 		$a=1;
 		foreach ($val['sumy'] as $sumy) {
-			$koef[$a]=$sumy/$Y[$a];
+			$koef[$a]=$sumy/100;
+							// $Y[$a]
 			$a++;
 		}
 		$val['koef']=$koef;
@@ -85,7 +83,8 @@ class Transaksi extends Model
 		//error
 		for ($i=1; $i <= $x; $i++) { 
 				$H[$i] = number_format(($val['a']+$val['b']*$i)*$koef[$i], 0);
-				$error[$i] = $H[$i] - $sumy[$i];
+				$error[$i] = $H[$i];
+							 // - $sumy[$i]
 		}
 
 		$val['error'] = array_sum($error);
@@ -133,12 +132,12 @@ class Transaksi extends Model
 		for ($n=4; $n <= count($sumy);) { 
 			$MA[$n] = ($sumy[$n-3]+$sumy[$n-2]+$sumy[$n-1])/3;
 
-			$error[$n] = $MA[$n] - $sumy[$n];
+			$error[$n] = (abs($MA[$n] - $sumy[$n]));
 			$n++;
 		}
 
 		$val['H'] = $MA;
-		$val['error'] = array_sum($error);
+		$val['error'] = (array_sum($error))/count($sumy);
 
 		$val['method'] = 'movingAverage';
 		return $val;
@@ -164,12 +163,12 @@ class Transaksi extends Model
 
 		       		$SES[$n][$i] = $SES[$n][$i-1] + $alpa*($sumy[$i-1] - $SES[$n][$i-1]);
 
-		       		$error[$n][$i] = $sumy[$i-1] - $SES[$n][$i];
+		       		$error[$n][$i] = abs($sumy[$i-1] - $SES[$n][$i]);
 		       		$i++;
 
 				}
 
-			$sumerror[$n] = array_sum($error[$n]);
+			$sumerror[$n] = (array_sum($error[$n]))/count($sumy);
 
 			$n++;
 
@@ -217,7 +216,7 @@ class Transaksi extends Model
 
 		       		$SES[$m][$i] = $SES[$m][$i-1]*$beta + $alpa*($sumy[$i-1] - $SES[$m][$i-1]);
 
-		       		$error[$m][$i] = $sumy[$i-1]-$SES[$m][$i];
+		       		$error[$m][$i] = abs($sumy[$i-1]-$SES[$m][$i]);
 		       		$i++;
 
 
@@ -225,7 +224,7 @@ class Transaksi extends Model
 				}
 
 				$res ["$n$m"] = [
-					'error' => array_sum($error[$m]),
+					'error' => (array_sum($error[$m]))/count($sumy),
 					'H' => $SES[$m],
 				];
 				$sumerror['ke-'.$m] = array_sum($error[$m]);

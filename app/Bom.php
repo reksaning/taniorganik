@@ -6,6 +6,10 @@ namespace App;
 class Bom extends Model
 {
 
+	public function komoditas(){
+		return $this->belongsTo('\App\Komoditas');
+	}
+
 	public function commodity(){
 		return $this->belongsTo('\App\Commodity');
 	}

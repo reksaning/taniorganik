@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Bom;
 use App\Commodity;
+use App\Komoditas;
 use App\Central;
 use App\Packaging;
 
@@ -77,7 +78,10 @@ class BomController extends Controller
     public function edit(Bom $bom)
 
     {
-        return view('boms.edit',compact('bom'));
+        $commodities = Commodity::all();
+        $suppliers = Central::all();
+        $packagings = Packaging::all();
+        return view('boms.edit',compact('bom','commodities','suppliers','packagings'));
     }
 
     /**
